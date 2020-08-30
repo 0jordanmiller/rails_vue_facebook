@@ -3,6 +3,7 @@
     <ul>
       <li v-for="post in posts" :key="post.key">{{post.post}}</li>
     </ul>
+    <sui-button color="yellow">Yellow</sui-button>
   </div>
 </template>
 

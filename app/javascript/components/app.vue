@@ -1,29 +1,36 @@
 <template>
   <div id="app">
-    <sui-button color="red" inverted>Red</sui-button>
-    <p>{{ message }}</p>
-    <sample></sample>
+    <p>Facebook</p>
+    <router-link to="/foo">Go to Foo</router-link>
+    <br />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import VueRouter from "vue-router";
 import "semantic-ui-css/semantic.min.css";
-
 import Vue from "vue";
 import SuiVue from "semantic-ui-vue";
-Vue.use(SuiVue);
-console.log(SuiVue);
-
 import Sample from "./sample.vue";
+Vue.use(VueRouter);
+Vue.use(SuiVue);
+
+const routes = [{ path: "/foo", component: Sample }];
+const router = new VueRouter({
+  routes: routes,
+});
+
 export default {
   data: function () {
     return {
-      message: "Welcome to Cinematronix!",
+      message: "Facebook",
     };
   },
   components: {
     Sample,
   },
+  router,
 };
 </script>
 

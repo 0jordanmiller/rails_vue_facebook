@@ -8,7 +8,7 @@
 
 import Vue from 'vue'
 import App from '../components/app.vue'
-require('./vue.config.js');
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

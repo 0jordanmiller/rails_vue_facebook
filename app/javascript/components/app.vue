@@ -1,24 +1,23 @@
 <template>
   <div id="app">
-    <p>Facebook</p>
+    <navbar />
     <router-link to="/foo">Go to Foo</router-link>
-    <br />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import VueRouter from "vue-router";
-import "semantic-ui-css/semantic.min.css";
 import Vue from "vue";
-import SuiVue from "semantic-ui-vue";
-import Sample from "./sample.vue";
-Vue.use(VueRouter);
-Vue.use(SuiVue);
+import Routes from "../routes/index";
+import Buefy from "buefy";
+import "buefy/dist/buefy.css";
+import Navbar from "./navbar";
 
-const routes = [{ path: "/foo", component: Sample }];
+Vue.use(Buefy);
+Vue.use(VueRouter);
 const router = new VueRouter({
-  routes: routes,
+  routes: Routes,
 });
 
 export default {
@@ -27,9 +26,7 @@ export default {
       message: "Facebook",
     };
   },
-  components: {
-    Sample,
-  },
+  components: { Navbar },
   router,
 };
 </script>

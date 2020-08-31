@@ -1,10 +1,6 @@
 class LandingController < ApplicationController
-  def index
-    gon.posts = Post.all
-  end
-  
-  def example
+  # def index
+  #   gon.posts = Post.all
+  # end
 
-  end
-    
 end

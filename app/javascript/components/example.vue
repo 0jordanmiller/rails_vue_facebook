@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import Sample from "./sample.vue";
 export default {
   data: function () {
     return {

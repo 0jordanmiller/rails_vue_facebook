@@ -1,37 +1,24 @@
 <template>
   <b-navbar>
-    <template slot="brand">
-      <b-navbar-item fixed="top" tag="router-link" :to="{ path: '/' }">
-        <img
-          src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
-          alt="Lightweight UI components for Vue.js based on Bulma"
-        />
-      </b-navbar-item>
-    </template>
     <template slot="start">
       <b-navbar-item>
-        <router-link to="/">Home</router-link>
+        <router-link to="/">Facebook</router-link>
       </b-navbar-item>
       <b-navbar-item>
-        <router-link to="/">Home</router-link>
+        <router-link to="/posts">Posts</router-link>
       </b-navbar-item>
-      <b-navbar-dropdown label="Info">
-        <b-navbar-item>
-          <router-link to="/">Home</router-link>
-        </b-navbar-item>
-        <b-navbar-item>
-          <router-link to="/">Home</router-link>
-        </b-navbar-item>
-      </b-navbar-dropdown>
     </template>
 
     <template slot="end">
       <b-navbar-item tag="div">
         <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light">Log in</a>
+          <div v-if="!signedIn">
+            <router-link class="button is-light" to="/signup">Sign up</router-link>
+            <router-link class="button is-light" to="/signin">Sign in</router-link>
+          </div>
+          <div v-if="signedIn">
+            <button class="button is-danger" v-on:click="signOut">Sign out</button>
+          </div>
         </div>
       </b-navbar-item>
     </template>
@@ -41,10 +28,37 @@
 <script>
 import Vue from "vue";
 import VueRouter from "vue-router";
+import axios from "../backend";
 
 Vue.use(VueRouter);
 
-export default {};
+export default {
+  created() {
+    console.log("hello");
+    console.log(this.signedIn);
+  },
+  computed: {
+    signedIn() {
+      return this.$store.state.user;
+    },
+  },
+  methods: {
+    // signedIn() {
+    //   return this.$store.user;
+    // },
+    signOut() {
+      axios
+        .delete("/users/sign_out")
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.$store.commit("signOut");
+    },
+  },
+};
 </script>
 
 

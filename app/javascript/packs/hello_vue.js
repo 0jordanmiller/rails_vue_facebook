@@ -8,16 +8,56 @@
 
 import Vue from 'vue'
 import App from '../components/app.vue'
+import Vuelidate from 'vuelidate'
+import store  from '../vuex/store'
+import vueCookie from 'vue-cookie'
+import axios from '../backend'
+// import status from 'http-status'
+import { pick } from "lodash";
+
+Vue.use(Vuelidate)
+Vue.use(axios)
+Vue.prototype.$http = axios.create()
+
+Vue.prototype.$http.interceptors.response.use((response) => {
+  const authHeaders = pick(r.headers, ["access-token", "client", "expiry", "uid", "token-type"])
+  store.commit('auth', authheaders)
+  var session = vueCookie.get('session')
+
+  if (session) {
+    var session = JSON.parse(session)
+    session['tokens'] = authHeaders
+
+    vueCookie.set('session', JSON.stringify(session), {expires: '14D'})
+  }
+  return response
+}, (error) => {
+  if (router.currentRoute.name !== 'signin' && error.response.status === status.UNAUTHORIZED) {
+    store.commit('user', null)
+    router.push({name: 'signin'})
+  }
+return Promise.reject(error)
+})
+
+
+Vue.prototype.$http.interceptors.request.use((config) => {
+  const headers = store.getters['auth'];
+
+  // object that holds configuration of the request that's about to be made
+  config.headers = headers;
+  return config
+})
 
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
+    store,
     render: h => h(App),
   }).$mount()
   document.body.appendChild(app.$el)
-
-  console.log(app)
 })
+
+
 
 
 // The above code uses Vue without the compiler, which means you cannot
@@ -34,16 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
 // </div>
 
 
-// import Vue from 'vue/dist/vue.esm'
-// import App from '../app.vue'
-//
+// import Vue from 'vue'
+// import App from '../components/app.vue'
+
 // document.addEventListener('DOMContentLoaded', () => {
 //   const app = new Vue({
-//     el: '#hello',
+//     el: '#app',
 //     data: {
 //       message: "Can you say hello?"
 //     },
-//     components: { App }
+//     components: { App },
+
 //   })
 // })
 //

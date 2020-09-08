@@ -10,7 +10,7 @@
 <script>
 import VueRouter from "vue-router";
 import Vue from "vue";
-import routes from "../routes/index";
+import router from "../routes/index";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 import Navbar from "./navbar";
@@ -18,10 +18,6 @@ import vueCookie from "vue-cookie";
 
 Vue.use(Buefy);
 Vue.use(VueRouter);
-const router = new VueRouter({
-  mode: "history",
-  routes,
-});
 
 export default {
   name: "app",
@@ -35,7 +31,6 @@ export default {
     },
   },
   beforeCreate: function () {
-    console.log("beforecreate happen");
     const existingSession = vueCookie.get("session");
 
     if (existingSession && existingSession.length) {

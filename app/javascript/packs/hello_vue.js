@@ -18,6 +18,7 @@ import { pick } from "lodash";
 Vue.use(Vuelidate)
 Vue.use(axios)
 Vue.prototype.$http = axios.create()
+Vue.use(vueCookie);
 
 Vue.prototype.$http.interceptors.response.use((response) => {
   const authHeaders = pick(r.headers, ["access-token", "client", "expiry", "uid", "token-type"])

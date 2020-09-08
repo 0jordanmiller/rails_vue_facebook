@@ -11,7 +11,7 @@
         </b-field>
 
         <b-button v-on:click="signIn()">Submit</b-button>
-        <p>{{errors}}</p>
+        <p>{{handleError}}</p>
       </div>
     </section>
   </div>
@@ -21,7 +21,6 @@
 import axios from "../backend";
 import { mapState } from "vuex";
 import { pick } from "lodash";
-import vueCookie from "vue-cookie";
 
 export default {
   name: "Signin",
@@ -32,7 +31,13 @@ export default {
       errors: null,
     };
   },
-
+  computed: {
+    handleError: function () {
+      if (this.errors == "Error: Request failed with status code 422") {
+        return "Incorrect password or email";
+      }
+    },
+  },
   methods: {
     signIn: function () {
       axios
@@ -59,8 +64,8 @@ export default {
             user: response.data,
           };
 
-          vueCookie.set("session", JSON.stringify(contents), {
-            expires: "14D",
+          this.$cookie.set("session", JSON.stringify(contents), {
+            expires: "20s",
           });
           this.$router.push({ path: "/" });
         })
@@ -69,7 +74,6 @@ export default {
         });
     },
   },
-  computed: mapState({}),
 };
 </script>
 

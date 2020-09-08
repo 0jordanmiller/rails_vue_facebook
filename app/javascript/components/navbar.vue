@@ -33,10 +33,6 @@ import axios from "../backend";
 Vue.use(VueRouter);
 
 export default {
-  created() {
-    console.log("hello");
-    console.log(this.signedIn);
-  },
   computed: {
     signedIn() {
       return this.$store.state.user;
@@ -50,7 +46,7 @@ export default {
       axios
         .delete("/users/sign_out")
         .then((response) => {
-          console.log(response);
+          this.$cookie.delete("session");
         })
         .catch((error) => {
           console.log(error);

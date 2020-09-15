@@ -14,11 +14,16 @@ import vueCookie from 'vue-cookie'
 import axios from '../backend'
 // import status from 'http-status'
 import { pick } from "lodash";
+import router from '../routes';
+import VueRouter from 'vue-router'
 
+Vue.use(VueRouter);
 Vue.use(Vuelidate)
 Vue.use(axios)
 Vue.prototype.$http = axios.create()
 Vue.use(vueCookie);
+
+
 
 Vue.prototype.$http.interceptors.response.use((response) => {
   const authHeaders = pick(r.headers, ["access-token", "client", "expiry", "uid", "token-type"])
@@ -53,6 +58,7 @@ Vue.prototype.$http.interceptors.request.use((config) => {
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     store,
+    router,
     render: h => h(App),
   }).$mount()
   document.body.appendChild(app.$el)

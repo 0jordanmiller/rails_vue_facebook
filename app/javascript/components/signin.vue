@@ -23,7 +23,7 @@ import { mapState } from "vuex";
 import { pick } from "lodash";
 
 export default {
-  name: "Signin",
+  name: "sign-in",
   data: function () {
     return {
       email: "0jordanmiller@gmail.com",

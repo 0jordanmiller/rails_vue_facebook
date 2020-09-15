@@ -8,22 +8,18 @@
 </template>
 
 <script>
-import VueRouter from "vue-router";
 import Vue from "vue";
-import router from "../routes/index";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 import Navbar from "./navbar";
 import vueCookie from "vue-cookie";
 
 Vue.use(Buefy);
-Vue.use(VueRouter);
 
 export default {
   name: "app",
   computed: {},
   components: { Navbar },
-  router,
   methods: {
     increment() {
       this.$store.commit("increment");

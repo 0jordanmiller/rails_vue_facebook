@@ -1,24 +1,18 @@
 <template>
-  <b-navbar>
+  <b-navbar v-if="signedIn">
     <template slot="start">
       <b-navbar-item>
         <router-link to="/">Facebook</router-link>
       </b-navbar-item>
       <b-navbar-item>
-        <router-link to="/posts">Posts</router-link>
+        <router-link to="/posts">Profile</router-link>
       </b-navbar-item>
     </template>
 
     <template slot="end">
       <b-navbar-item tag="div">
         <div class="buttons">
-          <div v-if="!signedIn">
-            <router-link class="button is-light" to="/signup">Sign up</router-link>
-            <router-link class="button is-light" to="/signin">Sign in</router-link>
-          </div>
-          <div v-if="signedIn">
-            <button class="button is-danger" v-on:click="signOut">Sign out</button>
-          </div>
+          <button class="button is-danger" v-on:click="signOut">Sign out</button>
         </div>
       </b-navbar-item>
     </template>
@@ -33,15 +27,13 @@ import axios from "../backend";
 Vue.use(VueRouter);
 
 export default {
+  name: "nav-bar",
   computed: {
     signedIn() {
       return this.$store.state.user;
     },
   },
   methods: {
-    // signedIn() {
-    //   return this.$store.user;
-    // },
     signOut() {
       axios
         .delete("/users/sign_out")

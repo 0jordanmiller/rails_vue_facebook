@@ -1,26 +1,40 @@
 <template>
-  <div>
-    <section class="columns">
-      <div class="column">
-        <b-field label="Name" :type="$v.name.required ? '' : 'is-danger' ">
-          <b-input v-model="name"></b-input>
-        </b-field>
+  <div class="modal-card" style="width: auto;">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Sign Up</p>
+      <button type="button" class="delete" @click="$emit('close')" />
+    </header>
+    <section class="modal-card-body">
+      <b-field label="Name" :type="$v.name.required ? '' : 'is-danger'">
+        <b-input v-model="name"></b-input>
+      </b-field>
 
-        <b-field label="Email">
-          <b-input v-model.trim="email" type="email" maxlength="30"></b-input>
-        </b-field>
+      <b-field label="Email">
+        <b-input v-model.trim="email" type="email" maxlength="30"></b-input>
+      </b-field>
 
-        <b-field label="Password">
-          <b-input v-model.trim="password" type="password" maxlength="30"></b-input>
-        </b-field>
-        <b-field
-          :message="password === password_confirmation  ? '' : 'Passwords do not match'"
-          label="Confirm Password"
-        >
-          <b-input v-model.trim="password_confirmation" type="password" maxlength="30"></b-input>
-        </b-field>
-        <b-button :disabled="$v.$invalid ? true : false " v-on:click="signUp()">Submit</b-button>
-      </div>
+      <b-field label="Password">
+        <b-input
+          v-model.trim="password"
+          type="password"
+          maxlength="30"
+        ></b-input>
+      </b-field>
+      <b-field
+        :message="
+          password === password_confirmation ? '' : 'Passwords do not match'
+        "
+        label="Confirm Password"
+      >
+        <b-input
+          v-model.trim="password_confirmation"
+          type="password"
+          maxlength="30"
+        ></b-input>
+      </b-field>
+      <b-button :disabled="$v.$invalid ? true : false" v-on:click="signUp"
+        >Submit</b-button
+      >
     </section>
   </div>
 </template>
@@ -30,8 +44,8 @@ import { required, minLength } from "vuelidate/lib/validators";
 
 import axios from "../backend";
 export default {
-  name: "Signup",
-  data: function () {
+  name: "sign-up",
+  data: function() {
     return {
       name: "",
       email: "",
@@ -53,7 +67,7 @@ export default {
     },
   },
   methods: {
-    signUp: function () {
+    signUp: function() {
       axios
         .post("/users", {
           user: {
@@ -74,4 +88,3 @@ export default {
   },
 };
 </script>
-

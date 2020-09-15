@@ -10,7 +10,8 @@
 import axios from "../backend";
 
 export default {
-  name: "Posts",
+  name: "show-posts",
+  props: ["postsType"],
   data: function () {
     return {
       posts: [],
@@ -22,7 +23,11 @@ export default {
   methods: {
     showPosts: function () {
       axios
-        .get("/getposts")
+        .get("/getposts", {
+          params: {
+            user_id: this.$store.state.user.id,
+          },
+        })
         .then((response) => {
           this.posts = response.data;
         })

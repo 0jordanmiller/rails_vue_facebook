@@ -1,0 +1,37 @@
+<template>
+  <div>
+    <b-field label="What's on your mind?">
+      <b-input v-model="writeStatus" type="textarea"></b-input>
+    </b-field>
+    <b-button type="is-primary" v-on:click="submitPost">Submit</b-button>
+  </div>
+</template>
+
+<script>
+import axios from "../backend";
+export default {
+  name: "write-status",
+  data() {
+    return {
+      writeStatus: "",
+    };
+  },
+  methods: {
+    submitPost() {
+      axios
+        .post("/posts", {
+          post: {
+            post: this.writeStatus,
+            user_id: this.$store.state.user.id,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+};
+</script>

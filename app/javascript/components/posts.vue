@@ -1,17 +1,19 @@
 <template>
   <div>
-    <ul>
-      <li v-for="post in posts" :key="post.id">{{post.post}}</li>
-    </ul>
+    <f-post v-bind:posts="posts" />
   </div>
 </template>
 
 <script>
 import axios from "../backend";
+import post from "./post";
 
 export default {
   name: "show-posts",
-  props: ["postsType"],
+  props: ["postUser"],
+  components: {
+    "f-post": post,
+  },
   data: function () {
     return {
       posts: [],
@@ -23,9 +25,9 @@ export default {
   methods: {
     showPosts: function () {
       axios
-        .get("/getposts", {
+        .get("/posts", {
           params: {
-            user_id: this.$store.state.user.id,
+            user_id: this.postUser,
           },
         })
         .then((response) => {

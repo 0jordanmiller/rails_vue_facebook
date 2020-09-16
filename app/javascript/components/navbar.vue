@@ -5,7 +5,7 @@
         <router-link to="/">Facebook</router-link>
       </b-navbar-item>
       <b-navbar-item>
-        <router-link to="/posts">Profile</router-link>
+        <router-link :to="userProfile">Profile</router-link>
       </b-navbar-item>
     </template>
 
@@ -31,6 +31,9 @@ export default {
   computed: {
     signedIn() {
       return this.$store.state.user;
+    },
+    userProfile() {
+      return "/user/" + this.$store.state.user.id;
     },
   },
   methods: {

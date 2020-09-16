@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   resources :posts
   get '/signup', to: 'landing#index'
   get '/signin', to: 'landing#index'
-  get '/getposts', to: 'landing#posts'
   get '/posts', to: 'landing#index'
+  get '/profile', to: 'landing#index'
 
 
 

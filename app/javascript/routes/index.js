@@ -1,16 +1,17 @@
 import VueRouter from "vue-router";
 import store from '../vuex/store'
-// import app from '../components/app'
 import signup from '../components/signup'
 import signin from '../components/signin'
 import posts from '../components/posts'
+import profile from '../components/profile'
 import homepage from '../components/homepage';
 
 const routes = [
     { name: "root", path: "/", component: homepage},
     { name: "signup", path: '/signup', component: signup},
     { name: "posts", path: '/posts', component: posts },
-    { name: "signin", path: '/signin', component: signin }
+    { name: "signin", path: '/signin', component: signin },
+    { name: "profile", path: '/user/:id', component: profile },
 ];
 
 const router = new VueRouter({

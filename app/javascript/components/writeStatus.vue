@@ -23,6 +23,7 @@ export default {
           post: {
             post: this.writeStatus,
             user_id: this.$store.state.user.id,
+            name: this.$store.state.user.name,
           },
         })
         .then((response) => {

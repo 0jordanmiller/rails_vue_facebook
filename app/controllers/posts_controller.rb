@@ -1,6 +1,12 @@
 class PostsController < ApplicationController
     def index
-        posts = Post.where(posts_by_id)
+        posts = nil
+        if posts_by_id[:user_id] == 'home'
+            posts = Post.all
+        else
+            posts = Post.where(posts_by_id)
+        end
+        p posts
         render json: posts.to_json
     end
     

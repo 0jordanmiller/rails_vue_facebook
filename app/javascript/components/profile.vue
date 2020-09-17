@@ -1,7 +1,7 @@
 <template lang="">
     <div>
         <write-status v-if="showWriteStatus"/>
-        <show-posts :postUser="userId" />
+        <show-posts :postUser="$route.params.id" />
     </div>
 </template>
 
@@ -11,10 +11,6 @@ import writestatus from "./writeStatus";
 
 export default {
   name: "profile",
-  created: function () {
-    console.log(typeof this.$store.state.user.id);
-    console.log(typeof this.$route.params.id);
-  },
   computed: {
     showWriteStatus() {
       return this.$store.state.user.id === parseInt(this.$route.params.id);

@@ -17,10 +17,16 @@ export default {
   data: function () {
     return {
       posts: [],
+      show: true,
     };
   },
   created: function () {
     this.showPosts();
+  },
+  watch: {
+    $route(to, from) {
+      this.showPosts();
+    },
   },
   methods: {
     showPosts: function () {

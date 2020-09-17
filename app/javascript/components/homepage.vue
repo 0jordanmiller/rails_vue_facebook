@@ -14,7 +14,7 @@
 
     <div v-if="signedIn">
         <write-status />
-        <show-posts postsType='a' />
+        <show-posts postUser='home' />
     </div>
 </div>
 

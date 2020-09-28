@@ -1,7 +1,7 @@
 <template lang="">
     <div>
         <write-status v-if="showWriteStatus"/>
-        <show-posts :postUser="$route.params.id" />
+        <show-posts :postUser="userId" />
     </div>
 </template>
 

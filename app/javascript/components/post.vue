@@ -10,7 +10,9 @@
         <div class="media-content">
           <div class="content">
             <p>
-              <strong>{{ post.name }}</strong>
+              <strong>
+                <router-link :to="userProfile(post.user_id)">{{ post.name }}</router-link>
+              </strong>
               <br />
               <small>{{post.created_at}}</small>
               <br />
@@ -44,11 +46,12 @@
 
 <script>
 export default {
-  props: ["posts"],
-
   name: "post",
-  data() {
-    return {};
+  props: ["posts"],
+  methods: {
+    userProfile(id) {
+      return "/user/" + id;
+    },
   },
 };
 </script>

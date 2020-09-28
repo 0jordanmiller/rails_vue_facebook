@@ -7,6 +7,9 @@
       <b-navbar-item>
         <router-link :to="userProfile">Profile</router-link>
       </b-navbar-item>
+      <b-navbar-item>
+        <router-link to="/friend_requests">Friend Requests</router-link>
+      </b-navbar-item>
     </template>
 
     <template slot="end">

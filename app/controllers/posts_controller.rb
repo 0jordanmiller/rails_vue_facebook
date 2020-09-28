@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
     def index
-        posts = nil
         if posts_by_id[:user_id] == 'home'
             posts = Post.all
         else
@@ -15,10 +14,10 @@ class PostsController < ApplicationController
         @post.save
     end
 
-  def get_posts
-    posts = Post.all
-    render json: posts.to_json
-  end
+    def get_posts
+        posts = Post.all
+        render json: posts.to_json
+    end
 
     private
     def whitelisted

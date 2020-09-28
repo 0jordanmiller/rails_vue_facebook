@@ -16,7 +16,7 @@
       aria-modal
     >
       <template>
-        <sign-up />
+        <sign-up v-on:close="closeModal"/>
       </template>
     </b-modal>
   </section>
@@ -33,6 +33,11 @@ export default {
     return {
       isComponentModalActive: false,
     };
+  },
+  methods: {
+    closeModal() {
+      this.isComponentModalActive = false
+    }
   },
   components: {
     ModalForm,

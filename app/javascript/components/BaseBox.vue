@@ -16,9 +16,9 @@
               <strong>
                 <!-- add conditional links and methods -->
                 <div v-if="true"></div>
-                <router-link :to="userProfile(data.id)">{{
-                  data.name
-                }}</router-link>
+                <router-link :to="userProfile(data.id)">
+                  {{ data.name }}
+                </router-link>
               </strong>
               <br />
               <small>{{ data.created_at }}</small>
@@ -30,6 +30,23 @@
         <div v-if="addFriend" class="media-right">
           <add-friend :id="data.id" />
         </div>
+
+        <div v-if="isPost">
+          <nav class="level is-mobile">
+            <div class="level-left">
+              <a @click="likePost()" class="level-item" aria-label="like">
+                <span class="icon is-small">
+                  <font-awesome-icon :icon="icon" />
+                </span>
+              </a>
+              <a class="level-item" aria-label="reply">
+                <span class="icon is-small">
+                  <font-awesome-icon icon="reply" />
+                </span>
+              </a>
+            </div>
+          </nav>
+        </div>
       </article>
     </div>
   </div>
@@ -37,6 +54,7 @@
 
 <script>
 import addFriendButton from "./addFriendButton";
+import axios from "../backend";
 
 export default {
   name: "rectangle-box",
@@ -48,6 +66,23 @@ export default {
     userProfile(id) {
       return "/user/" + id;
     },
+    likePost() {
+      axios.post();
+    },
+  },
+  computed: {
+    solid() {},
+  },
+  data() {
+    return {
+      icon: ["far", "thumbs-up"],
+    };
   },
 };
 </script>
+
+<style lang="scss">
+p {
+  font-size: 20px;
+}
+</style>

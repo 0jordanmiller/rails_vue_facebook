@@ -1,6 +1,6 @@
 <template>
   <div>
-    <f-post :data="posts" />
+    <f-post :data="posts" :isPost="true" />
   </div>
 </template>
 

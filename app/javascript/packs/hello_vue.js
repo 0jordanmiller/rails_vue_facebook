@@ -17,6 +17,17 @@ import { pick } from "lodash";
 import router from '../routes';
 import VueRouter from 'vue-router'
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faThumbsUp as sfaThumbsUp, faReply } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faThumbsUp as rfaThumbsUp } from "@fortawesome/free-regular-svg-icons";
+
+
+library.add(sfaThumbsUp, faReply, rfaThumbsUp);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
+
+
+
 Vue.use(VueRouter);
 Vue.use(Vuelidate)
 Vue.use(axios)

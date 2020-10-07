@@ -1,6 +1,11 @@
 <template>
   <div>
-    <f-request v-bind:requests="friend_requests[0]" />
+    <button class="button is-medium is-success" @click="success">
+      Launch notification (custom)
+    </button>
+    <f-request v-bind:requests="friend_requests" />
+
+    <h1 v-if="friend_requests.length === 0">No friend requests :(</h1>
   </div>
 </template>
 
@@ -19,10 +24,25 @@ export default {
     };
   },
   created: function () {
-    axios.get("/friend_requests").then((response) => {
-      console.log(response.data);
-      this.friend_requests.push(response.data);
-    });
+    this.showFriendRequests();
+  },
+  methods: {
+    success() {
+      this.$buefy.notification.open({
+        message: "Something happened correctly!",
+        type: "is-success",
+      });
+    },
+    showFriendRequests() {
+      axios
+        .get("/friend_requests", {
+          params: { user_id: this.$store.state.user.id },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.friend_requests = response.data;
+        });
+    },
   },
 };
 </script>

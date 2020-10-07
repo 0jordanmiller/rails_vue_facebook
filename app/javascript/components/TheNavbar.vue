@@ -10,12 +10,20 @@
       <b-navbar-item>
         <router-link to="/friend_requests">Friend Requests</router-link>
       </b-navbar-item>
+      <b-navbar-item>
+        <router-link to="/users">Users</router-link>
+      </b-navbar-item>
+      <b-navbar-item>
+        <router-link to="/friends">Friends</router-link>
+      </b-navbar-item>
     </template>
 
     <template slot="end">
       <b-navbar-item tag="div">
         <div class="buttons">
-          <button class="button is-danger" v-on:click="signOut">Sign out</button>
+          <button to="/" class="button is-danger" v-on:click="signOut">
+            Sign out
+          </button>
         </div>
       </b-navbar-item>
     </template>

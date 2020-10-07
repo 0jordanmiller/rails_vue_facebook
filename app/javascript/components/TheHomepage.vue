@@ -14,7 +14,7 @@
 
     <div v-if="signedIn">
         <write-status />
-        <show-posts postUser='home' />
+        <show-posts pageType='home' />
     </div>
 </div>
 
@@ -24,7 +24,7 @@
 import signin from "./signin";
 import posts from "./posts";
 import modal from "./modal";
-import writestatus from "./writeStatus";
+import writestatus from "./StatusWriteBox";
 
 export default {
   name: "home",

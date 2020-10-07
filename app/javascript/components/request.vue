@@ -39,8 +39,7 @@ export default {
   props: ["requests"],
   methods: {
     accept(requester) {
-      this.deleteRequest(requester);
-      // this.addFriend(requester);
+      this.addFriend(requester, this.deleteRequest(requester));
     },
     delet(requester) {
       this.deleteRequest(requester);
@@ -58,7 +57,7 @@ export default {
           console.log(response);
         });
     },
-    addFriend(requester) {
+    addFriend(requester, callback = "") {
       axios
         .post("/friends", {
           befriend: {

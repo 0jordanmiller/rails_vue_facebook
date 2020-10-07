@@ -11,7 +11,7 @@
 import Vue from "vue";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
-import Navbar from "./navbar";
+import navbar from "./TheNavbar";
 import vueCookie from "vue-cookie";
 
 Vue.use(Buefy);
@@ -19,7 +19,7 @@ Vue.use(Buefy);
 export default {
   name: "app",
   computed: {},
-  components: { Navbar },
+  components: { navbar },
   methods: {
     increment() {
       this.$store.commit("increment");

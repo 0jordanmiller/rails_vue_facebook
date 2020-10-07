@@ -1,13 +1,18 @@
 <template lang="">
     <div>
+      <div>
+        Cover Image
+        <h1> {{ name }} </h1>
+      </div>
+        <b-button v-if="" @click="" type="is-info">Add Friend</b-button>
         <write-status v-if="showWriteStatus"/>
-        <show-posts :postUser="userId" />
+        <show-posts pageType="profile" />
     </div>
 </template>
 
 <script>
 import posts from "./posts";
-import writestatus from "./writeStatus";
+import StatusWriteBox from "./StatusWriteBox";
 
 export default {
   name: "profile",
@@ -21,10 +26,18 @@ export default {
     userId() {
       return this.$store.state.user.id;
     },
+    // showAddFriend() {
+    //   return this.$store.state.user.id !==
+    // },
   },
   components: {
-    "write-status": writestatus,
+    "write-status": StatusWriteBox,
     "show-posts": posts,
+  },
+  data() {
+    return {
+      name: this.$store.state.user.name,
+    };
   },
 };
 </script>

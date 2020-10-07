@@ -3,9 +3,11 @@ import store from '../vuex/store'
 import signup from '../components/signup'
 import signin from '../components/signin'
 import posts from '../components/posts'
-import profile from '../components/profile'
-import homepage from '../components/homepage';
-import friendRequests from '../components/friendRequests';
+import users from '../components/TheUsersPage'
+import profile from '../components/TheProfilePage'
+import homepage from '../components/TheHomepage';
+import friends from '../components/TheFriendList';
+import FriendRequests from '../components/FriendRequests';
 
 
 const routes = [
@@ -14,7 +16,9 @@ const routes = [
     { name: "posts", path: '/posts', component: posts },
     { name: "signin", path: '/signin', component: signin },
     { name: "profile", path: '/user/:id', component: profile },
-    { name: "friend-requests", path: '/friend_requests', component: friendRequests },
+    { name: "friend-requests", path: '/friend_requests', component: FriendRequests },
+    { name: "users", path: '/users', component: users },
+    { name: "friends", path: '/friends', component: friends },
 
 ];
 

@@ -1,9 +1,14 @@
 class PostsController < ApplicationController
+    
+
     def index
-        if posts_by_id[:user_id] == 'home'
-            posts = Post.all
+        if page_type[:page_type] == 'home'
+            posts = User.find_by(id: page_type[:user_id]).friends.map do |user|
+                user.posts
+            end
+            posts = posts.sum + User.find_by(id: page_type[:user_id]).posts
         else
-            posts = Post.where(posts_by_id)
+            posts = User.find_by(id: page_type[:user_id]).posts
         end
         p posts
         render json: posts.to_json
@@ -14,16 +19,16 @@ class PostsController < ApplicationController
         @post.save
     end
 
-    def get_posts
-        posts = Post.all
-        render json: posts.to_json
-    end
 
     private
+
+    def set_default_response_format
+         request.format = :json
+    end
     def whitelisted
         params.require(:post).permit(:post, :user_id, :name)
     end
-    def posts_by_id
-        params.permit(:user_id)
+    def page_type
+        params.permit(:page_type, :user_id)
     end
 end

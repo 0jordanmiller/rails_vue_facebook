@@ -1,18 +1,18 @@
 <template>
   <div>
-    <f-post v-bind:posts="posts" />
+    <f-post :data="posts" />
   </div>
 </template>
 
 <script>
 import axios from "../backend";
-import post from "./post";
+import BaseBox from "./BaseBox";
 
 export default {
   name: "show-posts",
-  props: ["postUser"],
+  props: ["pageType"],
   components: {
-    "f-post": post,
+    "f-post": BaseBox,
   },
   data: function () {
     return {
@@ -33,11 +33,13 @@ export default {
       axios
         .get("/posts", {
           params: {
-            user_id: this.postUser,
+            page_type: this.pageType,
+            user_id: this.$store.state.user.id,
           },
         })
         .then((response) => {
           this.posts = response.data;
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);

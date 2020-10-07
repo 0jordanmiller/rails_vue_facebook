@@ -1,19 +1,20 @@
 Rails.application.routes.draw do
-  devise_for :users
   root to: 'landing#index'
+  devise_for :users
   resources :posts
-  resources :friend_requests, path: 'friend_requests' do
+  resources :friends
+  resources :friend_requests, except: [:show, :edit, :new, :update], path: 'friend_requests' do
+      
+
     collection do
-      delete '/:user1/:user2', action: :destroy
+      delete '/:receiver/:sender', action: :destroy
+      get '/sent_to', action: :sent_to
     end
   end
 
-  resources :friends
+  get '/users', to: 'users#index'
+  get '/*', to: "landing#index"
 
-  get '/signup', to: 'landing#index'
-  get '/signin', to: 'landing#index'
-  get '/posts', to: 'landing#index'
-  get '/profile', to: 'landing#index'
 
 
 end

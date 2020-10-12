@@ -1,6 +1,6 @@
 <template>
   <div>
-    <f-post :data="posts" :isPost="true" />
+    <f-post :data="posts" :likes="likes" :isPost="true" />
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   data: function () {
     return {
       posts: [],
-      show: true,
+      likes: [],
     };
   },
   created: function () {
@@ -38,7 +38,9 @@ export default {
           },
         })
         .then((response) => {
-          this.posts = response.data;
+          this.posts = response.data[0];
+          this.likes = response.data[1];
+
           console.log(response.data);
         })
         .catch((error) => {

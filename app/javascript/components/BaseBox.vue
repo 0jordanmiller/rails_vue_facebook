@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="data in data" :key="data.id" class="box">
+    <div v-for="(data, i) in data" :key="data.id" class="box">
       <article class="media">
         <div class="media-left">
           <figure class="image is-64x64">
@@ -26,6 +26,13 @@
               {{ data.post }}
             </p>
           </div>
+
+          <div v-if="isPost">
+            <div>
+              <p>Likes: {{ likeCount(likes[i]) }}</p>
+            </div>
+            <write-comment />
+          </div>
         </div>
         <div v-if="addFriend" class="media-right">
           <add-friend :id="data.id" />
@@ -34,14 +41,9 @@
         <div v-if="isPost">
           <nav class="level is-mobile">
             <div class="level-left">
-              <a @click="likePost()" class="level-item" aria-label="like">
+              <a @click="likePost(data.id)">
                 <span class="icon is-small">
-                  <font-awesome-icon :icon="icon" />
-                </span>
-              </a>
-              <a class="level-item" aria-label="reply">
-                <span class="icon is-small">
-                  <font-awesome-icon icon="reply" />
+                  <font-awesome-icon :icon="solid(i)" />
                 </span>
               </a>
             </div>
@@ -54,28 +56,71 @@
 
 <script>
 import addFriendButton from "./addFriendButton";
+import writeCommentField from "./WriteCommentField";
 import axios from "../backend";
 
 export default {
   name: "rectangle-box",
-  props: ["data", "addFriend", "isPost"],
+  props: ["data", "likes", "addFriend", "isPost"],
   components: {
     "add-friend": addFriendButton,
+    "write-comment": writeCommentField,
   },
+
   methods: {
+    solid(index) {
+      if (this.likedPosts[index] === true) {
+        return ["fas", "thumbs-up"];
+      } else {
+        return ["far", "thumbs-up"];
+      }
+    },
     userProfile(id) {
       return "/user/" + id;
     },
-    likePost() {
-      axios.post();
+    likeCount(likes) {
+      return likes.length;
+    },
+    likeOrUnlike() {},
+    likePost(post) {
+      axios
+        .post("/like_post", {
+          params: {
+            post_id: post,
+            user_id: this.$store.state.user.id,
+          },
+        })
+        .then((response) => {
+          // console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    likedOrNot(arr) {
+      let found = false;
+      let i;
+      for (i = 0; i < arr.length; i++) {
+        if (arr[i].user_id === this.$store.state.user.id) {
+          found = true;
+        }
+        console.log(arr[i]);
+      }
+      this.likedPosts.push(found);
     },
   },
-  computed: {
-    solid() {},
+  watch: {
+    likes(n) {
+      console.log(n);
+      n.forEach((element) => {
+        this.likedOrNot(element);
+      });
+    },
   },
   data() {
     return {
-      icon: ["far", "thumbs-up"],
+      iconSet: ["fas", "thumbs-up"],
+      likedPosts: [],
     };
   },
 };
@@ -84,5 +129,9 @@ export default {
 <style lang="scss">
 p {
   font-size: 20px;
+}
+.box {
+  max-width: 900px;
+  margin: auto;
 }
 </style>

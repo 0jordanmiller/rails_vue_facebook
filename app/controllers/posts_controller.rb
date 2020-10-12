@@ -1,17 +1,17 @@
 class PostsController < ApplicationController
-    
-
     def index
         if page_type[:page_type] == 'home'
             posts = User.find_by(id: page_type[:user_id]).friends.map do |user|
                 user.posts
             end
             posts = posts.sum + User.find_by(id: page_type[:user_id]).posts
-        else
+        elsif page_type[:page_type] == 'profile'
             posts = User.find_by(id: page_type[:user_id]).posts
         end
-        p posts
-        render json: posts.to_json
+        posts_likes = []
+        likes = posts.map {|post| post.likes}
+        posts_likes.push(posts, likes)
+        render json: posts_likes.to_json
     end
     
     def create

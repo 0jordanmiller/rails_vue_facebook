@@ -41,9 +41,16 @@
         <div v-if="isPost">
           <nav class="level is-mobile">
             <div class="level-left">
-              <a @click="likePost(data.id)">
+              <a @click="likeOrUnlike(i, data.id)">
                 <span class="icon is-small">
-                  <font-awesome-icon :icon="solid(i)" />
+                  <font-awesome-icon :icon="solid(i)" :key="i" />
+                  <!-- <font-awesome-icon
+                    :icon="
+                      likedPosts[i]
+                        ? ['fas', 'thumbs-up']
+                        : ['far', 'thumbs-up']
+                    "
+                  /> -->
                 </span>
               </a>
             </div>
@@ -58,6 +65,7 @@
 import addFriendButton from "./addFriendButton";
 import writeCommentField from "./WriteCommentField";
 import axios from "../backend";
+import Vue from "vue";
 
 export default {
   name: "rectangle-box",
@@ -69,7 +77,7 @@ export default {
 
   methods: {
     solid(index) {
-      if (this.likedPosts[index] === true) {
+      if (this.likedPosts[index]) {
         return ["fas", "thumbs-up"];
       } else {
         return ["far", "thumbs-up"];
@@ -81,17 +89,41 @@ export default {
     likeCount(likes) {
       return likes.length;
     },
-    likeOrUnlike() {},
-    likePost(post) {
+    likeOrUnlike(index, post_id) {
+      if (this.likedPosts[index]) {
+        this.unlikePost(post_id, index);
+      } else {
+        this.likePost(post_id, index);
+      }
+    },
+    likePost(post_id, index) {
       axios
         .post("/like_post", {
           params: {
-            post_id: post,
+            post_id: post_id,
             user_id: this.$store.state.user.id,
           },
         })
         .then((response) => {
-          // console.log(response);
+          this.likedPosts[index] = true;
+          this.solid(index);
+          this.$foceUpdate;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    unlikePost(post_id, index) {
+      axios
+        .delete("/like_post", {
+          params: {
+            post_id: post_id,
+            user_id: this.$store.state.user.id,
+          },
+        })
+        .then((response) => {
+          this.likedPosts[index] = false;
+          this.solid(index);
         })
         .catch((err) => {
           console.log(err);
@@ -104,14 +136,12 @@ export default {
         if (arr[i].user_id === this.$store.state.user.id) {
           found = true;
         }
-        console.log(arr[i]);
       }
       this.likedPosts.push(found);
     },
   },
   watch: {
     likes(n) {
-      console.log(n);
       n.forEach((element) => {
         this.likedOrNot(element);
       });

@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_many :likes, foreign_key: "like_id", class_name: "Like"
   has_many :liked_posts, through: :likes, source: :post
 
+  has_many :comments, foreign_key: "comment_id", class_name: "Comment"
+  has_many :commented_posts, through: :comments, source: :post
+
   has_many :friendships, dependent: :destroy, foreign_key: "user_id", class_name: "Friendship"
   has_many :friends, through: :friendships
 

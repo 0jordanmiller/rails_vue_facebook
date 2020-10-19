@@ -16,7 +16,7 @@
               <strong>
                 <!-- add conditional links and methods -->
                 <div v-if="true"></div>
-                <router-link :to="userProfile(data.id)">
+                <router-link :to="userProfile(data.user_id)">
                   {{ data.name }}
                 </router-link>
               </strong>
@@ -29,7 +29,7 @@
 
           <div v-if="isPost">
             <div>
-              <comment-box />
+              <comment-box :index="i" :comments="comments" />
 
               <p>Likes: {{ likeCount(likes[i]) }}</p>
             </div>

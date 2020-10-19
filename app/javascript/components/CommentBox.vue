@@ -1,10 +1,14 @@
 <template>
-  <div class="box">
-    <p>hello</p>
+  <div>
+    <div class="box" v-for="comment in comments[index]" :key="comment.id">
+      {{ comment.comment }}
+    </div>
   </div>
 </template>
 
 <script>
-name: "CommentBox";
-export default {};
+export default {
+  name: "CommentBox",
+  props: ["comments", "index"],
+};
 </script>

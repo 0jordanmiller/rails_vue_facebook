@@ -12,6 +12,7 @@ class LikesController < ApplicationController
     def like
         params.permit(:post_id, :user_id)
     end
+    
     def like_create
         params.require(:params).permit(:post_id, :user_id)
     end

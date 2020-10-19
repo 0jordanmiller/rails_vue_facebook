@@ -29,28 +29,28 @@
 
           <div v-if="isPost">
             <div>
+              <comment-box />
+
               <p>Likes: {{ likeCount(likes[i]) }}</p>
             </div>
-            <write-comment />
+            <write-comment v-on:sendComment="makeComment(data.id, $event)" />
           </div>
         </div>
         <div v-if="addFriend" class="media-right">
           <add-friend :id="data.id" />
         </div>
-
         <div v-if="isPost">
           <nav class="level is-mobile">
             <div class="level-left">
               <a @click="likeOrUnlike(i, data.id)">
                 <span class="icon is-small">
-                  <font-awesome-icon :icon="solid(i)" :key="i" />
-                  <!-- <font-awesome-icon
+                  <font-awesome-icon
                     :icon="
                       likedPosts[i]
                         ? ['fas', 'thumbs-up']
                         : ['far', 'thumbs-up']
                     "
-                  /> -->
+                  />
                 </span>
               </a>
             </div>
@@ -64,25 +64,20 @@
 <script>
 import addFriendButton from "./addFriendButton";
 import writeCommentField from "./WriteCommentField";
+import commentBox from "./CommentBox";
 import axios from "../backend";
 import Vue from "vue";
 
 export default {
   name: "rectangle-box",
-  props: ["data", "likes", "addFriend", "isPost"],
+  props: ["data", "likes", "comments", "addFriend", "isPost"],
   components: {
     "add-friend": addFriendButton,
     "write-comment": writeCommentField,
+    "comment-box": commentBox,
   },
 
   methods: {
-    solid(index) {
-      if (this.likedPosts[index]) {
-        return ["fas", "thumbs-up"];
-      } else {
-        return ["far", "thumbs-up"];
-      }
-    },
     userProfile(id) {
       return "/user/" + id;
     },
@@ -96,7 +91,8 @@ export default {
         this.likePost(post_id, index);
       }
     },
-    likePost(post_id, index) {
+    likePost: function (post_id, index) {
+      let self = this;
       axios
         .post("/like_post", {
           params: {
@@ -105,15 +101,14 @@ export default {
           },
         })
         .then((response) => {
-          this.likedPosts[index] = true;
-          this.solid(index);
-          this.$foceUpdate;
+          self.likedPosts[index] = true;
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    unlikePost(post_id, index) {
+    unlikePost: function (post_id, index) {
+      let self = this;
       axios
         .delete("/like_post", {
           params: {
@@ -122,8 +117,7 @@ export default {
           },
         })
         .then((response) => {
-          this.likedPosts[index] = false;
-          this.solid(index);
+          self.likedPosts[index] = false;
         })
         .catch((err) => {
           console.log(err);
@@ -138,6 +132,23 @@ export default {
         }
       }
       this.likedPosts.push(found);
+    },
+    makeComment(post_id, comment) {
+      console.log(post_id, comment);
+      axios
+        .post("/comments", {
+          params: {
+            post_id: post_id,
+            user_id: this.$store.state.user.id,
+            comment: comment,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   watch: {

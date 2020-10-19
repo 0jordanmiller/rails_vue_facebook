@@ -10,7 +10,9 @@ class PostsController < ApplicationController
         end
         posts_likes = []
         likes = posts.map {|post| post.likes}
-        posts_likes.push(posts, likes)
+        comments = posts.map {|post| post.comments}
+        posts_likes.push(posts, likes, comments)
+
         render json: posts_likes.to_json
     end
     

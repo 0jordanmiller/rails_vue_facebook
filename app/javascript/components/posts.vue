@@ -1,6 +1,6 @@
 <template>
   <div>
-    <f-post :data="posts" :likes="likes" :isPost="true" />
+    <f-post :data="posts" :likes="likes" :comments="comments" :isPost="true" />
   </div>
 </template>
 
@@ -40,13 +40,31 @@ export default {
         .then((response) => {
           this.posts = response.data[0];
           this.likes = response.data[1];
-
+          this.comments = response.data[2];
           console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+  },
+  showComments: function () {
+    axios
+      .get("/comments", {
+        params: {
+          page_type: this.pageType,
+          user_id: this.$store.state.user.id,
+        },
+      })
+      .then((response) => {
+        this.posts = response.data[0];
+        this.likes = response.data[1];
+
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>

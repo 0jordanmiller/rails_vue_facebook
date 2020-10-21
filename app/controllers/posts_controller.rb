@@ -1,12 +1,12 @@
 class PostsController < ApplicationController
     def index
-        if page_type[:page_type] == 'home'
-            posts = User.find_by(id: page_type[:user_id]).friends.map do |user|
+        if get_posts[:page_type] == 'home'
+            posts = User.find_by(id: get_posts[:user_id]).friends.map do |user|
                 user.posts
             end
-            posts = posts.sum + User.find_by(id: page_type[:user_id]).posts
-        elsif page_type[:page_type] == 'profile'
-            posts = User.find_by(id: page_type[:user_id]).posts
+            posts = posts.sum + User.find_by(id: get_posts[:user_id]).posts
+        elsif get_posts[:page_type] == 'profile'
+            posts = User.find_by(id: get_posts[:user_id]).posts
         end
         posts_likes = []
         likes = posts.map {|post| post.likes}
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
     def whitelisted
         params.require(:post).permit(:post, :user_id, :name)
     end
-    def page_type
+    def get_posts
         params.permit(:page_type, :user_id)
     end
 end

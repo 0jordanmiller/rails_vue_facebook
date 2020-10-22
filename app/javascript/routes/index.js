@@ -7,7 +7,7 @@ import users from '../components/TheUsersPage'
 import profile from '../components/TheProfilePage'
 import homepage from '../components/TheHomepage';
 import friends from '../components/TheFriendList';
-import FriendRequests from '../components/FriendRequests';
+// import FriendRequests from '../components/FriendRequests';
 
 
 const routes = [
@@ -16,7 +16,7 @@ const routes = [
     { name: "posts", path: '/posts', component: posts },
     { name: "signin", path: '/signin', component: signin },
     { name: "profile", path: '/user/:id', component: profile },
-    { name: "friend-requests", path: '/friend_requests', component: FriendRequests },
+    // { name: "friend-requests", path: '/friend_requests', component: FriendRequests },
     { name: "users", path: '/users', component: users },
     { name: "friends", path: '/friends', component: friends },
 

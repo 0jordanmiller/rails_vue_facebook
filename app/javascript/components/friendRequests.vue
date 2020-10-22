@@ -23,7 +23,7 @@ export default {
       friend_requests: [],
     };
   },
-  created: function () {
+  created() {
     this.showFriendRequests();
   },
   methods: {

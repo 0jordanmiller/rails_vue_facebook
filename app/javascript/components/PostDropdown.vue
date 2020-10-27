@@ -1,21 +1,40 @@
 <template>
-  <div>
+  <div @click="test">
     <b-dropdown aria-role="list">
-      <button class="button is-primary" slot="trigger" slot-scope="{ active }">
-        <span>Click me!</span>
-        <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
-      </button>
-
-      <b-dropdown-item aria-role="listitem">Action</b-dropdown-item>
-      <b-dropdown-item aria-role="listitem">Another action</b-dropdown-item>
-      <b-dropdown-item aria-role="listitem">Something else</b-dropdown-item>
+      <font-awesome-icon
+        class="options"
+        slot="trigger"
+        :icon="['fas', 'ellipsis-v']"
+      />
+      <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
+      <b-dropdown-item @click="deletePost(postOrComment)" aria-role="listitem"
+        >Delete</b-dropdown-item
+      >
     </b-dropdown>
   </div>
 </template>
 
 <script>
+import axios from "../backend";
 export default {
   name: "Dropdown",
-  methods: {},
+  props: ["id", "postOrComment"],
+  methods: {
+    deletePost(postOrComment) {
+      console.log(this.id);
+      axios.delete(`/${postOrComment}/` + this.id).then((res) => {
+        console.log(res);
+      });
+    },
+    test() {
+      console.log(this.postOrComment);
+    },
+  },
 };
 </script>
+<style >
+.options:hover {
+  cursor: pointer;
+}
+</style>
+

@@ -35,7 +35,7 @@ export default {
         .get("/posts", {
           params: {
             page_type: this.pageType,
-            user_id: this.$store.state.user.id,
+            user_id: this.$store.state.user.id ?? this.$route.params.id,
           },
         })
         .then((response) => {

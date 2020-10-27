@@ -16,6 +16,7 @@ import StatusWriteBox from "./StatusWriteBox";
 
 export default {
   name: "profile",
+
   computed: {
     showWriteStatus() {
       return this.$store.state.user.id === parseInt(this.$route.params.id);
@@ -26,6 +27,7 @@ export default {
     userId() {
       return this.$store.state.user.id;
     },
+
     // showAddFriend() {
     //   return this.$store.state.user.id !==
     // },

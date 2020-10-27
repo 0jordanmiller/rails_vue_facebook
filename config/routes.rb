@@ -12,9 +12,6 @@ Rails.application.routes.draw do
   end
   post '/like_post', to: 'likes#create'
   delete '/like_post', to: 'likes#destroy'
-
-
-
   get '/users', to: 'users#index'
   get '/*', to: "landing#index"
 

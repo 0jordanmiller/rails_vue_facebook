@@ -7,11 +7,15 @@
         </b-field>
 
         <b-field label="Password">
-          <b-input v-model.trim="password" type="password" maxlength="30"></b-input>
+          <b-input
+            v-model.trim="password"
+            type="password"
+            maxlength="30"
+          ></b-input>
         </b-field>
 
         <b-button v-on:click="signIn()">Submit</b-button>
-        <p>{{handleError}}</p>
+        <p>{{ handleError }}</p>
       </div>
     </section>
   </div>
@@ -24,13 +28,7 @@ import { pick } from "lodash";
 
 export default {
   name: "sign-in",
-  data: function () {
-    return {
-      email: "0jordanmiller@gmail.com",
-      password: "Erlichten8",
-      errors: null,
-    };
-  },
+
   computed: {
     handleError: function () {
       if (this.errors == "Error: Request failed with status code 422") {
@@ -65,7 +63,7 @@ export default {
           };
 
           this.$cookie.set("session", JSON.stringify(contents), {
-            expires: "20s",
+            expires: "1d",
           });
           this.$router.push({ path: "/" });
         })
@@ -73,6 +71,13 @@ export default {
           this.errors = error;
         });
     },
+  },
+  data: function () {
+    return {
+      email: "0jordanmiller@gmail.com",
+      password: "Erlichten8",
+      errors: null,
+    };
   },
 };
 </script>

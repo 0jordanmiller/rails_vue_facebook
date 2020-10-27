@@ -11,8 +11,8 @@ export default {
   name: "write-comment",
   methods: {
     sendComment() {
-      console.log("hello");
       this.$emit("sendComment", this.comment);
+      this.comment = "";
     },
   },
   data() {

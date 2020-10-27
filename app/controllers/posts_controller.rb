@@ -4,7 +4,11 @@ class PostsController < ApplicationController
             posts = User.find_by(id: get_posts[:user_id]).friends.map do |user|
                 user.posts
             end
-            posts = posts.sum + User.find_by(id: get_posts[:user_id]).posts
+            if posts.any?
+                posts = posts.sum + User.find_by(id: get_posts[:user_id]).posts
+            else
+                posts = User.find_by(id: get_posts[:user_id]).posts
+            end
         elsif get_posts[:page_type] == 'profile'
             posts = User.find_by(id: get_posts[:user_id]).posts
         end
@@ -21,15 +25,24 @@ class PostsController < ApplicationController
         @post.save
     end
 
+    def destroy
+        Post.find_by(id: delete[:id]).destroy
+    end
 
     private
 
     def set_default_response_format
          request.format = :json
     end
+
     def whitelisted
         params.require(:post).permit(:post, :user_id, :name)
     end
+
+    def delete
+        params.permit(:id)
+    end
+
     def get_posts
         params.permit(:page_type, :user_id)
     end

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(data, i) in data" :key="data.id" class="box">
+    <div class="box" v-for="(data, i) in data" :key="data.id">
       <article class="media">
         <div class="media-left">
           <figure class="image is-64x64">
@@ -15,7 +15,6 @@
             <p>
               <strong>
                 <!-- add conditional links and methods -->
-                <div v-if="true"></div>
                 <router-link :to="userProfile(data.user_id)">
                   {{ data.name }}
                 </router-link>
@@ -29,9 +28,22 @@
 
           <div v-if="isPost">
             <div>
-              <comment-box :index="i" :comments="comments" />
+              <p>
+                <a @click="likeOrUnlike(i, data.id)">
+                  <span class="icon is-small">
+                    <font-awesome-icon
+                      :icon="
+                        likedPosts[i]
+                          ? ['fas', 'thumbs-up']
+                          : ['far', 'thumbs-up']
+                      "
+                    />
+                  </span>
+                </a>
+                {{ likeCount(likes[i]) }}
+              </p>
 
-              <p>Likes: {{ likeCount(likes[i]) }}</p>
+              <comment-box :index="i" :comments="comments" />
             </div>
             <write-comment v-on:sendComment="makeComment(data.id, $event)" />
           </div>
@@ -39,23 +51,11 @@
         <div v-if="addFriend" class="media-right">
           <add-friend :id="data.id" />
         </div>
-        <div v-if="isPost">
-          <nav class="level is-mobile">
-            <div class="level-left">
-              <a @click="likeOrUnlike(i, data.id)">
-                <span class="icon is-small">
-                  <font-awesome-icon
-                    :icon="
-                      likedPosts[i]
-                        ? ['fas', 'thumbs-up']
-                        : ['far', 'thumbs-up']
-                    "
-                  />
-                </span>
-              </a>
-            </div>
-          </nav>
-        </div>
+        <nav v-if="isPost && signedIn === data.user_id" class="level is-mobile">
+          <div class="level-left">
+            <drop-down :id="data.id" postOrComment="posts" />
+          </div>
+        </nav>
       </article>
     </div>
   </div>
@@ -65,6 +65,7 @@
 import addFriendButton from "./addFriendButton";
 import writeCommentField from "./WriteCommentField";
 import commentBox from "./CommentBox";
+import dropdown from "./PostDropdown";
 import axios from "../backend";
 import Vue from "vue";
 
@@ -75,6 +76,7 @@ export default {
     "add-friend": addFriendButton,
     "write-comment": writeCommentField,
     "comment-box": commentBox,
+    "drop-down": dropdown,
   },
 
   methods: {
@@ -141,6 +143,7 @@ export default {
             post_id: post_id,
             user_id: this.$store.state.user.id,
             comment: comment,
+            commenter: this.$store.state.user.name,
           },
         })
         .then((response) => {
@@ -149,6 +152,11 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+  },
+  computed: {
+    signedIn() {
+      return this.$store.state.user.id;
     },
   },
   watch: {

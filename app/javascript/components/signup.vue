@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-card" style="width: auto;">
+  <div class="modal-card" style="width: auto">
     <header class="modal-card-head">
       <p class="modal-card-title">Sign Up</p>
       <button type="button" class="delete" @click="$emit('close')" />
@@ -32,6 +32,7 @@
           maxlength="30"
         ></b-input>
       </b-field>
+      <p v-if="error">This email has already been taken.</p>
       <b-button :disabled="$v.$invalid ? true : false" v-on:click="signUp"
         >Submit</b-button
       >
@@ -45,13 +46,14 @@ import { required, minLength } from "vuelidate/lib/validators";
 import axios from "../backend";
 export default {
   name: "sign-up",
-  data: function() {
+  data: function () {
     return {
       name: "",
       email: "",
       password: "",
       password_confirmation: "",
       submitStatus: false,
+      error: "",
     };
   },
   validations: {
@@ -67,7 +69,7 @@ export default {
     },
   },
   methods: {
-    signUp: function() {
+    signUp: function () {
       axios
         .post("/users", {
           user: {
@@ -83,6 +85,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.error = true;
         });
     },
   },

@@ -5,17 +5,16 @@
         <h1> {{ name }} </h1>
       </div>
         <b-button v-if="" @click="" type="is-info">Add Friend</b-button>
-        <write-status v-if="showWriteStatus"/>
         <show-posts pageType="profile" />
     </div>
 </template>
 
 <script>
-import posts from "./posts";
+import posts from "./AppPosts";
 import StatusWriteBox from "./StatusWriteBox";
 
 export default {
-  name: "profile",
+  name: "Profile",
 
   computed: {
     showWriteStatus() {
@@ -27,10 +26,6 @@ export default {
     userId() {
       return this.$store.state.user.id;
     },
-
-    // showAddFriend() {
-    //   return this.$store.state.user.id !==
-    // },
   },
   components: {
     "write-status": StatusWriteBox,

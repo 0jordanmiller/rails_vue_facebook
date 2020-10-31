@@ -1,13 +1,13 @@
 import VueRouter from "vue-router";
-import store from '../vuex/store'
-import signup from '../components/signup'
-import signin from '../components/signin'
-import posts from '../components/posts'
-import users from '../components/TheUsersPage'
-import profile from '../components/TheProfilePage'
+import store from '../vuex/store';
+import signup from '../components/signup';
+import signin from '../components/signin';
+import posts from '../components/AppPosts';
+import users from '../components/TheUsersPage';
+import profile from '../components/TheProfilePage';
 import homepage from '../components/TheHomepage';
 import friends from '../components/TheFriendList';
-import friendrequests from '../components/FriendRequests';
+import friendrequests from '../components/TheFriendRequestsPage';
 
 
 const routes = [

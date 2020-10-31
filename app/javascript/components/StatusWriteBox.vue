@@ -27,7 +27,9 @@ export default {
           },
         })
         .then((response) => {
+          this.writeStatus = "";
           console.log(response);
+          this.$emit("update-page");
         })
         .catch((err) => {
           console.log(err);

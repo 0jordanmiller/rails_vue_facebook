@@ -13,7 +13,6 @@
   </div>
 
     <div v-if="signedIn">
-        <write-status />
         <show-posts pageType='home' />
     </div>
 </div>
@@ -22,9 +21,8 @@
 
 <script>
 import signin from "./signin";
-import posts from "./posts";
+import posts from "./AppPosts";
 import modal from "./modal";
-import writestatus from "./StatusWriteBox";
 
 export default {
   name: "home",
@@ -36,7 +34,6 @@ export default {
   components: {
     "sign-in": signin,
     "sign-up": modal,
-    "write-status": writestatus,
     "show-posts": posts,
   },
 };

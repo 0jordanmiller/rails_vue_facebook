@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  defaults format: :json do
+    resources :posts
+  end
   root to: 'landing#index'
   devise_for :users
-  resources :posts
   resources :comments, except: [:show, :new, :update, :index]
   resources :friends
   resources :friend_requests, except: [:show, :edit, :new, :update], path: 'friend_requests' do
@@ -14,7 +16,4 @@ Rails.application.routes.draw do
   delete '/like_post', to: 'likes#destroy'
   get '/users', to: 'users#index'
   get '/*', to: "landing#index"
-
-
-
 end

@@ -8,18 +8,19 @@
 
 <script>
 export default {
-  name: "write-comment",
-  methods: {
-    sendComment() {
-      this.$emit("sendComment", this.comment);
-      this.comment = "";
-    },
-  },
+  name: "Comment-Field",
+
   data() {
     return {
       labelPosition: "on-border",
       comment: "",
     };
+  },
+  methods: {
+    sendComment() {
+      this.$emit("send-comment", this.comment);
+      this.comment = "";
+    },
   },
 };
 </script>

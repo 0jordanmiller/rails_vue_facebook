@@ -1,9 +1,6 @@
 <template>
   <div>
-    <button class="button is-medium is-success" @click="success">
-      Launch notification (custom)
-    </button>
-    <f-request v-bind:requests="friend_requests" />
+    <f-request @notify="success" v-bind:requests="friend_requests" />
 
     <h1 v-if="friend_requests.length === 0">No friend requests :(</h1>
   </div>
@@ -11,7 +8,7 @@
 
 <script>
 import axios from "../backend";
-import request from "./request";
+import request from "./RequestBox";
 
 export default {
   name: "friend-requests",
@@ -29,9 +26,10 @@ export default {
   methods: {
     success() {
       this.$buefy.notification.open({
-        message: "Something happened correctly!",
+        message: "Request Accepted",
         type: "is-success",
       });
+      this.showFriendRequests();
     },
     showFriendRequests() {
       axios

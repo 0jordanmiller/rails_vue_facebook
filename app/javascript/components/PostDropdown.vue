@@ -1,5 +1,5 @@
 <template>
-  <div @click="test">
+  <div>
     <b-dropdown aria-role="list">
       <font-awesome-icon
         class="options"
@@ -21,13 +21,10 @@ export default {
   props: ["id", "postOrComment"],
   methods: {
     deletePost(postOrComment) {
-      console.log(this.id);
       axios.delete(`/${postOrComment}/` + this.id).then((res) => {
         console.log(res);
+        this.$emit("update-page");
       });
-    },
-    test() {
-      console.log(this.postOrComment);
     },
   },
 };

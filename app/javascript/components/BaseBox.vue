@@ -15,7 +15,10 @@
             <p>
               <strong>
                 <!-- add conditional links and methods -->
-                <router-link :to="userProfile(data.user_id)">
+                <router-link v-if="isPost" :to="userProfile(data.user_id)">
+                  {{ data.name }}
+                </router-link>
+                <router-link v-else :to="userProfile(data.id)">
                   {{ data.name }}
                 </router-link>
               </strong>
@@ -29,7 +32,7 @@
           <div v-if="isPost">
             <div>
               <p>
-                <a @click="likeOrUnlike(i, data.id)">
+                <a @click="thumbsUp(i, data.id)">
                   <span class="icon is-small">
                     <font-awesome-icon
                       :icon="
@@ -45,7 +48,7 @@
 
               <comment-box :index="i" :comments="comments" />
             </div>
-            <write-comment v-on:sendComment="makeComment(data.id, $event)" />
+            <write-comment @send-comment="makeComment(data.id, $event)" />
           </div>
         </div>
         <div v-if="addFriend" class="media-right">
@@ -53,7 +56,11 @@
         </div>
         <nav v-if="isPost && signedIn === data.user_id" class="level is-mobile">
           <div class="level-left">
-            <drop-down :id="data.id" postOrComment="posts" />
+            <drop-down
+              :id="data.id"
+              postOrComment="posts"
+              @update-page="updatePage"
+            />
           </div>
         </nav>
       </article>
@@ -70,7 +77,7 @@ import axios from "../backend";
 import Vue from "vue";
 
 export default {
-  name: "rectangle-box",
+  name: "Base-Box",
   props: ["data", "likes", "comments", "addFriend", "isPost"],
   components: {
     "add-friend": addFriendButton,
@@ -78,52 +85,51 @@ export default {
     "comment-box": commentBox,
     "drop-down": dropdown,
   },
-
+  computed: {
+    userId() {},
+  },
+  watch: {
+    likes(n) {
+      n.forEach((element) => {
+        this.likedOrNot(element);
+      });
+    },
+  },
+  data() {
+    return {
+      iconSet: ["fas", "thumbs-up"],
+      likedPosts: [],
+    };
+  },
   methods: {
+    test() {
+      console.log("tested");
+    },
     userProfile(id) {
       return "/user/" + id;
     },
     likeCount(likes) {
       return likes.length;
     },
-    likeOrUnlike(index, post_id) {
+    thumbsUp(index, post_id) {
       if (this.likedPosts[index]) {
-        this.unlikePost(post_id, index);
+        this.likeOrUnlike(post_id, index, "delete", false);
       } else {
-        this.likePost(post_id, index);
+        this.likeOrUnlike(post_id, index, "post", true);
       }
     },
-    likePost: function (post_id, index) {
-      let self = this;
-      axios
-        .post("/like_post", {
-          params: {
-            post_id: post_id,
-            user_id: this.$store.state.user.id,
-          },
-        })
-        .then((response) => {
-          self.likedPosts[index] = true;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    unlikePost: function (post_id, index) {
-      let self = this;
-      axios
-        .delete("/like_post", {
-          params: {
-            post_id: post_id,
-            user_id: this.$store.state.user.id,
-          },
-        })
-        .then((response) => {
-          self.likedPosts[index] = false;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    likeOrUnlike(post_id, index, method, like) {
+      axios({
+        method: method,
+        url: "/like_post",
+        params: {
+          post_id: post_id,
+          user_id: this.$store.state.user.id,
+        },
+      }).then((response) => {
+        this.likedPosts[index] = like;
+        this.updatePage();
+      });
     },
     likedOrNot(arr) {
       let found = false;
@@ -147,30 +153,20 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
+          this.updatePage();
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    updatePage() {
+      this.$emit("update-page");
     },
   },
   computed: {
     signedIn() {
       return this.$store.state.user.id;
     },
-  },
-  watch: {
-    likes(n) {
-      n.forEach((element) => {
-        this.likedOrNot(element);
-      });
-    },
-  },
-  data() {
-    return {
-      iconSet: ["fas", "thumbs-up"],
-      likedPosts: [],
-    };
   },
 };
 </script>

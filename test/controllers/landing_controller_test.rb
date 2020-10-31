@@ -5,5 +5,4 @@ class LandingControllerTest < ActionDispatch::IntegrationTest
     get landing_index_url
     assert_response :success
   end
-
 end

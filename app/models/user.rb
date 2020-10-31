@@ -21,12 +21,9 @@ class User < ApplicationRecord
   has_many :sent_to, through: :sent_requests, source: :receiver, foreign_key: "sender_id"
   has_many :received_from, through: :received_requests, source: :sender, foreign_key: "receiver_id"
 
-
-    def befriend(user)
-      # TODO: put in check that association does not exist
-      self.friends << user
-      user.friends << self
-    end
-
-
+  def befriend(user)
+    # TODO: put in check that association does not exist
+    self.friends << user
+    user.friends << self
+  end
 end

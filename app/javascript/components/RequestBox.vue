@@ -23,7 +23,6 @@
           </div>
         </div>
         <div class="media-right">
-          {{ request.id }}
           <b-button @click="accept(request.id)">Accept</b-button>
           <b-button @click="delet(request.id)">Delete</b-button>
         </div>
@@ -66,7 +65,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
+          this.$emit("notify");
         })
         .catch((error) => {
           console.log(error);

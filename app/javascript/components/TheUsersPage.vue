@@ -8,7 +8,7 @@
 import BaseBox from "./BaseBox";
 import axios from "../backend";
 export default {
-  name: "users",
+  name: "Users",
   data() {
     return {
       users: [],

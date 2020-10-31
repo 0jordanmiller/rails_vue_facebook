@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-respond_to :html, :json
-   protect_from_forgery prepend: true
+  respond_to :html, :json
+  protect_from_forgery prepend: true
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 

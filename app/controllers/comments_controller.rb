@@ -1,10 +1,10 @@
 class CommentsController < ApplicationController
   def create
-    Post.find_by(id: create_comment[:post_id]).comments << Comment.create(user_id: create_comment[:user_id], comment: create_comment[:comment], commenter: create_comment[:commenter])
+    Post.find_by(id: create_comment[:post_id]).comments << Comment.create(create_comment)
   end
 
   def destroy
-    Comment.find_by(id: destroy_comment[:id]).destroy
+    Comment.find_by(destroy_comment).destroy
   end
 
   private

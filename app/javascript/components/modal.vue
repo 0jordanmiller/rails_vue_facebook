@@ -4,7 +4,7 @@
       class="button is-primary is-small"
       @click="isComponentModalActive = true"
     >
-      Create New Account
+      {{ buttonText }}
     </button>
 
     <b-modal
@@ -16,7 +16,7 @@
       aria-modal
     >
       <template>
-        <sign-up v-on:close="closeModal"/>
+        <slot name="content" />
       </template>
     </b-modal>
   </section>
@@ -29,19 +29,20 @@ const ModalForm = {
 };
 
 export default {
-  data() {
-    return {
-      isComponentModalActive: false,
-    };
-  },
+  props: ["buttonText", "modalContent"],
   methods: {
     closeModal() {
-      this.isComponentModalActive = false
-    }
+      this.isComponentModalActive = false;
+    },
   },
   components: {
     ModalForm,
     "sign-up": signup,
+  },
+  data() {
+    return {
+      isComponentModalActive: false,
+    };
   },
 };
 </script>

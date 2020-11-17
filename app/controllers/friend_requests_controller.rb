@@ -1,14 +1,11 @@
 class FriendRequestsController < ApplicationController
   def index
-    p user_id[:user_id]
-    p "whoa"
-    @friend_requests = User.find_by(id: user_id[:user_id]).received_from
+    @friend_requests = User.find_by(user_id).received_from
     render json: @friend_requests.to_json
   end
 
   def sent_to
-    p 'hey'
-    @friend_request_sent = User.find_by(id: user_id[:user_id]).sent_to
+    @friend_request_sent = User.find_by(user_id).sent_to
     render json: @friend_request_sent.to_json
   end
 

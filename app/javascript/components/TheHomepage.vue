@@ -7,7 +7,11 @@
       </div>
       <div class="column is-6">
         <sign-in />
-        <sign-up />
+        <signup-modal buttonText="Create New Account" >
+          <div slot='content'>
+            <signup-content v-on:close="closeModal"/>
+          </div>
+        </signup-modal>
       </div>
     </div>
   </div>
@@ -23,6 +27,7 @@
 import signin from "./signin";
 import posts from "./AppPosts";
 import modal from "./modal";
+import signup from "./signup";
 
 export default {
   name: "home",
@@ -33,8 +38,15 @@ export default {
   },
   components: {
     "sign-in": signin,
-    "sign-up": modal,
+    "signup-modal": modal,
     "show-posts": posts,
+    "signup-content": signup,
+  },
+  methods: {
+    closeModal() {
+      console.log("abc");
+      this.isComponentModalActive = false;
+    },
   },
 };
 </script>

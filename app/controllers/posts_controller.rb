@@ -4,11 +4,11 @@ class PostsController < ApplicationController
       posts = User.find_by(id: get_posts[:user_id]).friends.map do |user|
         user.posts
       end
-      if posts.any?
-        posts = posts.sum + User.find_by(id: get_posts[:user_id]).posts
-      else
-        posts = User.find_by(id: get_posts[:user_id]).posts
-      end
+      posts = if posts.any?
+                posts.sum + User.find_by(id: get_posts[:user_id]).posts
+              else
+                User.find_by(id: get_posts[:user_id]).posts
+              end
     elsif get_posts[:page_type] == 'profile'
       posts = User.find_by(id: get_posts[:user_id]).posts
     end
@@ -18,6 +18,10 @@ class PostsController < ApplicationController
     posts_likes.push(posts, likes, comments)
 
     render json: posts_likes.to_json
+  end
+
+  def show
+    Post.find_by
   end
 
   def updated
@@ -38,9 +42,6 @@ class PostsController < ApplicationController
 
   def whitelisted
     params.require(:post).permit(:post, :user_id, :name)
-  end
-
-  def comment_id
   end
 
   def id

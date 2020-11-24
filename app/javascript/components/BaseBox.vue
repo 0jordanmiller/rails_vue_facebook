@@ -32,7 +32,7 @@
           <div v-if="isPost">
             <div>
               <p>
-                <a @click="thumbsUp(i, data.id)">
+                <a @click="thumbsUp(i, data.id, data.user_id)">
                   <span class="icon is-small">
                     <font-awesome-icon
                       :icon="
@@ -75,6 +75,7 @@ import commentBox from "./CommentBox";
 import dropdown from "./PostDropdown";
 import axios from "../backend";
 import Vue from "vue";
+import sendNotificationMixin from "../mixins/sendNotificationMixin";
 
 export default {
   name: "Base-Box",
@@ -85,25 +86,27 @@ export default {
     "comment-box": commentBox,
     "drop-down": dropdown,
   },
-  computed: {
-    userId() {},
-  },
-  watch: {
-    likes(n) {
-      n.forEach((element) => {
-        this.likedOrNot(element);
-      });
-    },
-  },
+  mixins: [sendNotificationMixin],
   data() {
     return {
       iconSet: ["fas", "thumbs-up"],
       likedPosts: [],
     };
   },
+  computed: {
+    signedIn() {
+      return this.$store.state.user.id;
+    },
+  },
   methods: {
-    test() {
-      console.log("tested");
+    likedOrNot(arr) {
+      let found = false;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].user_id === this.$store.state.user.id) {
+          found = true;
+        }
+      }
+      this.likedPosts.push(found);
     },
     userProfile(id) {
       return "/user/" + id;
@@ -111,14 +114,14 @@ export default {
     likeCount(likes) {
       return likes.length;
     },
-    thumbsUp(index, post_id) {
+    thumbsUp(index, post_id, user_id) {
       if (this.likedPosts[index]) {
         this.likeOrUnlike(post_id, index, "delete", false);
       } else {
-        this.likeOrUnlike(post_id, index, "post", true);
+        this.likeOrUnlike(post_id, index, "post", true, user_id);
       }
     },
-    likeOrUnlike(post_id, index, method, like) {
+    likeOrUnlike(post_id, index, method, like, user_id) {
       axios({
         method: method,
         url: "/like_post",
@@ -127,19 +130,12 @@ export default {
           user_id: this.$store.state.user.id,
         },
       }).then((response) => {
+        if (method === "post") {
+          this.notify("like", this.$store.state.user.name, user_id, post_id);
+        }
         this.likedPosts[index] = like;
         this.updatePage();
       });
-    },
-    likedOrNot(arr) {
-      let found = false;
-      let i;
-      for (i = 0; i < arr.length; i++) {
-        if (arr[i].user_id === this.$store.state.user.id) {
-          found = true;
-        }
-      }
-      this.likedPosts.push(found);
     },
     makeComment(post_id, comment) {
       console.log(post_id, comment);
@@ -163,11 +159,15 @@ export default {
       this.$emit("update-page");
     },
   },
-  computed: {
-    signedIn() {
-      return this.$store.state.user.id;
+
+  watch: {
+    likes(n) {
+      n.forEach((element) => {
+        this.likedOrNot(element);
+      });
     },
   },
+  created() {},
 };
 </script>
 

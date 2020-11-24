@@ -2,16 +2,16 @@
     <div>
       <div>
         <div class="cover-wrap">
-          <img id="cover-picture" src="https://www.telegraph.co.uk/content/dam/Travel/2018/September/El-Yunque-morning-mist-iStock-535499464.jpg" alt="">
+          <img id="cover-picture" src="" alt="">
           <div v-if="userProfile" >
             <update-picture buttonText="Update Profile Picture">
             <div slot='content'>
-              <update-picture-content title="Update Profile Picture"/>
+              <update-picture-content pictureType="profile" title="Update Profile Picture"/>
             </div>
           </update-picture>
           <update-picture buttonText="Update Cover Picture">
             <div slot='content'>
-              <update-picture-content title="Update Cover Picture" />
+              <update-picture-content pictureType="cover" title="Update Cover Picture" />
             </div>            
           </update-picture>
           </div>
@@ -28,10 +28,30 @@ import posts from "./AppPosts";
 import StatusWriteBox from "./StatusWriteBox";
 import modal from "./modal";
 import updatePictureContent from "./UpdatePictureContent";
+import axios from "../backend";
 
 export default {
   name: "Profile",
 
+  components: {
+    "write-status": StatusWriteBox,
+    "show-posts": posts,
+    "update-picture": modal,
+    "update-picture-content": updatePictureContent,
+  },
+  methods: {
+    fetchUserData() {
+      axios
+        .get("/users/", {
+          params: {
+            id: this.$route.params.id,
+          },
+        })
+        .then((resp) => {
+          console.log(resp);
+        });
+    },
+  },
   computed: {
     userProfile() {
       return this.$store.state.user.id === parseInt(this.$route.params.id);
@@ -43,16 +63,13 @@ export default {
       return this.$store.state.user.id;
     },
   },
-  components: {
-    "write-status": StatusWriteBox,
-    "show-posts": posts,
-    "update-picture": modal,
-    "update-picture-content": updatePictureContent,
-  },
   data() {
     return {
       name: this.$store.state.user.name,
     };
+  },
+  created() {
+    this.fetchUserData();
   },
 };
 </script>

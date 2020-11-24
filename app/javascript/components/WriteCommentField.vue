@@ -1,6 +1,6 @@
 <template>
-  <div @keyup.enter="sendComment">
-    <b-field label="Comment" :label-position="labelPosition">
+  <div class="comment-field" @keyup.enter="sendComment">
+    <b-field label="Comment" :label-position="'on-border'">
       <b-input v-model="comment" type="text"></b-input>
     </b-field>
   </div>
@@ -12,7 +12,6 @@ export default {
 
   data() {
     return {
-      labelPosition: "on-border",
       comment: "",
     };
   },
@@ -25,4 +24,8 @@ export default {
 };
 </script>
 
-
+<style>
+.comment-field {
+  margin-top: 15px;
+}
+</style>

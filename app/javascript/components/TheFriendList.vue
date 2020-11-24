@@ -1,6 +1,6 @@
 <template>
   <div>
-    <f-friends :data="friends" />
+    <f-friends :data="friends" :isPost="false" />
   </div>
 </template>
 

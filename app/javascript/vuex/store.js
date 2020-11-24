@@ -8,6 +8,17 @@ export default new Vuex.Store({
         user: null,
         auth: {}
     },
+    mutations: {
+        user (state, value) {
+            state.user = value
+        },
+        auth (state, value) {
+            state.auth = value
+        },
+        signOut(state) {
+            state.user = null
+        }
+    },
     actions: {
         signIn(state, payload) {
             state.user = payload
@@ -20,15 +31,5 @@ export default new Vuex.Store({
         user: state => state.user,
         auth: state => state.auth,
     },
-    mutations: {
-        user (state, value) {
-            state.user = value
-        },
-        auth (state, value) {
-            state.auth = value
-        },
-        signOut(state) {
-            state.user = null
-        }
-    }
+
 })

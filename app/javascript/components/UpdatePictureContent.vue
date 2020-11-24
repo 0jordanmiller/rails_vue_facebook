@@ -9,7 +9,7 @@
         <input type="file" ref="inputFile" @change="uploadFile()" />
 
         <button class="button is-primary is-small" @click="createItem">
-          Create this Item!
+          Update
         </button>
       </form>
     </section>
@@ -22,7 +22,7 @@ import { required, minLength } from "vuelidate/lib/validators";
 import axios from "../backend";
 export default {
   name: "update-picture",
-  props: ["title"],
+  props: ["title", "pictureType"],
   methods: {
     // Saving the file in our data to send it !
     uploadFile() {
@@ -34,6 +34,7 @@ export default {
       const params = {
         picture: this.inputPicture,
         user_id: this.$store.state.user.id,
+        type: this.pictureType,
       };
 
       let formData = new FormData();

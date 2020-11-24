@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   has_many :posts
 
+  has_many :notifications
+
   has_many :likes, foreign_key: 'like_id', class_name: 'Like'
   has_many :liked_posts, through: :likes, source: :post
 

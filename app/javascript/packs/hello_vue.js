@@ -18,7 +18,7 @@ import router from '../routes';
 import VueRouter from 'vue-router'
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faThumbsUp as sfaThumbsUp, faReply, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp as sfaThumbsUp, faReply, faEllipsisV, faBell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faThumbsUp as rfaThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import VueMeta from 'vue-meta';
@@ -27,7 +27,7 @@ Vue.use(VueMeta, {
     refreshOnceOnNavigation: true
 })
 
-library.add(sfaThumbsUp, faReply, rfaThumbsUp, faEllipsisV);
+library.add(sfaThumbsUp, faReply, rfaThumbsUp, faEllipsisV, faBell);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.use(VueRouter);

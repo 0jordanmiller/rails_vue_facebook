@@ -1,11 +1,15 @@
 <template>
   <div>
-    <div class="box" v-for="comment in comments[index]" :key="comment.id">
+    <div
+      class="comment box"
+      v-for="comment in comments[index]"
+      :key="comment.id"
+    >
       <article class="media">
         <div class="media-left">
-          <figure class="image is-64x64">
+          <figure class="image is-32x32">
             <img
-              src="https://bulma.io/images/placeholders/128x128.png"
+              src="https://bulma.io/images/placeholders/32x32.png"
               alt="Image"
             />
           </figure>
@@ -48,3 +52,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.comment.box .media {
+  border-top: none;
+}
+</style>

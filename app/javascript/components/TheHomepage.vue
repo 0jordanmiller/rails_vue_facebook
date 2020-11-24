@@ -3,7 +3,7 @@
   <div v-if="!signedIn">
     <div class="columns">
       <div class="column is-6">
-        <h1>facebook lol</h1>
+        <h1>facebook lols</h1>
       </div>
       <div class="column is-6">
         <sign-in />

@@ -5,78 +5,92 @@
 // like app/views/layouts/application.html.erb.
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
-
-import Vue from 'vue'
-import App from '../components/app.vue'
-import Vuelidate from 'vuelidate'
-import store  from '../vuex/store'
-import vueCookie from 'vue-cookie'
-import axios from '../backend'
+import Vue from "vue";
+import App from "../components/app.vue";
+import Vuelidate from "vuelidate";
+import store from "../vuex/store";
+import vueCookie from "vue-cookie";
+import axios from "../backend";
+import Buefy from "buefy";
+import "buefy/dist/buefy.css";
 // import status from 'http-status'
 import { pick } from "lodash";
-import router from '../routes';
-import VueRouter from 'vue-router'
+import router from "../routes";
+import VueRouter from "vue-router";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faThumbsUp as sfaThumbsUp, faReply, faEllipsisV, faBell } from "@fortawesome/free-solid-svg-icons";
+import {
+  faThumbsUp as sfaThumbsUp,
+  faReply,
+  faEllipsisV,
+  faBell,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faThumbsUp as rfaThumbsUp } from "@fortawesome/free-regular-svg-icons";
-import VueMeta from 'vue-meta';
+import VueMeta from "vue-meta";
 
-Vue.use(VueMeta, { 
-    refreshOnceOnNavigation: true
-})
+Vue.use(VueMeta, {
+  refreshOnceOnNavigation: true,
+});
 
 library.add(sfaThumbsUp, faReply, rfaThumbsUp, faEllipsisV, faBell);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
+Vue.use(Buefy);
 Vue.use(VueRouter);
-Vue.use(Vuelidate)
-Vue.use(axios)
-Vue.prototype.$http = axios.create()
+Vue.use(Vuelidate);
+Vue.use(axios);
+Vue.prototype.$http = axios.create();
 Vue.use(vueCookie);
 
-Vue.prototype.$http.interceptors.response.use((response) => {
-  const authHeaders = pick(r.headers, ["access-token", "client", "expiry", "uid", "token-type"])
-  store.commit('auth', authheaders)
-  var session = vueCookie.get('session')
+Vue.prototype.$http.interceptors.response.use(
+  (response) => {
+    const authHeaders = pick(r.headers, [
+      "access-token",
+      "client",
+      "expiry",
+      "uid",
+      "token-type",
+    ]);
+    store.commit("auth", authheaders);
+    var session = vueCookie.get("session");
 
-  if (session) {
-    var session = JSON.parse(session)
-    session['tokens'] = authHeaders
+    if (session) {
+      var session = JSON.parse(session);
+      session["tokens"] = authHeaders;
 
-    vueCookie.set('session', JSON.stringify(session), {expires: '14D'})
+      vueCookie.set("session", JSON.stringify(session), { expires: "14D" });
+    }
+    return response;
+  },
+  (error) => {
+    if (
+      router.currentRoute.name !== "signin" &&
+      error.response.status === status.UNAUTHORIZED
+    ) {
+      store.commit("user", null);
+      router.push({ name: "signin" });
+    }
+    return Promise.reject(error);
   }
-  return response
-}, (error) => {
-  if (router.currentRoute.name !== 'signin' && error.response.status === status.UNAUTHORIZED) {
-    store.commit('user', null)
-    router.push({name: 'signin'})
-  }
-return Promise.reject(error)
-})
-
+);
 
 Vue.prototype.$http.interceptors.request.use((config) => {
-  const headers = store.getters['auth'];
+  const headers = store.getters["auth"];
 
   // object that holds configuration of the request that's about to be made
   config.headers = headers;
-  return config
-})
+  return config;
+});
 
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({
     store,
     router,
-    render: h => h(App),
-  }).$mount()
-  document.body.appendChild(app.$el)
-})
-
-
-
+    render: (h) => h(App),
+  }).$mount();
+  document.body.appendChild(app.$el);
+});
 
 // The above code uses Vue without the compiler, which means you cannot
 // use Vue to target elements in your existing html templates. You would
@@ -90,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
 //   {{message}}
 //   <app></app>
 // </div>
-
 
 // import Vue from 'vue'
 // import App from '../components/app.vue'

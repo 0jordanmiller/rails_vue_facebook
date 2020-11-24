@@ -9,12 +9,9 @@
 
 <script>
 import Vue from "vue";
-import Buefy from "buefy";
-import "buefy/dist/buefy.css";
+
 import navbar from "./TheNavbar";
 import vueCookie from "vue-cookie";
-
-Vue.use(Buefy);
 
 export default {
   name: "app",

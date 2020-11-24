@@ -122,10 +122,11 @@ export default {
 
 .notification {
   padding: 0px;
+  border-radius: 12px;
 }
 
-.notification {
-  border-radius: 12px;
+.notification .content:hover {
+  background: #eeeeee;
 }
 
 .content {

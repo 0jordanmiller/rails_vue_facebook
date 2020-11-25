@@ -50,3 +50,9 @@ export default {
   },
 };
 </script>
+
+<style>
+h1 {
+  font-size: 40px;
+}
+</style>

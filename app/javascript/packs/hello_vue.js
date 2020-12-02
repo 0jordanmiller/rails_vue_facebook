@@ -7,6 +7,7 @@
 
 import Vue from "vue";
 import App from "../components/app.vue";
+import TurbolinksAdapter from "vue-turbolinks";
 import Vuelidate from "vuelidate";
 import store from "../vuex/store";
 import vueCookie from "vue-cookie";
@@ -36,6 +37,7 @@ Vue.use(VueMeta, {
 library.add(sfaThumbsUp, faReply, rfaThumbsUp, faEllipsisV, faBell);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
+Vue.use(TurbolinksAdapter);
 Vue.use(Buefy);
 Vue.use(VueRouter);
 Vue.use(Vuelidate);
@@ -83,7 +85,7 @@ Vue.prototype.$http.interceptors.request.use((config) => {
   return config;
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("turbolinks:load", () => {
   const app = new Vue({
     store,
     router,

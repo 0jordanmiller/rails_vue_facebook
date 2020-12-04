@@ -30,6 +30,7 @@ class PostsController < ApplicationController
   end
 
   def create
+    p 'is it live'
     @post = Post.new(whitelisted)
     @post.save
   end

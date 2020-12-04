@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     submitPost() {
+      console.log("activate");
       axios
         .post("/posts", {
           post: {

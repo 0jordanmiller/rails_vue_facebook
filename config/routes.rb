@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-  defaults format: :json do
-    resources :posts
-  end
   root to: 'landing#index'
   devise_for :users
+  resources :posts
   resources :comments, except: %i[show new update index]
   resources :friends
   resources :notifications, only: %i[index create destroy]

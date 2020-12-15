@@ -1,0 +1,25 @@
+                           List of relations
+ Schema |               Name                |   Type   |     Owner      
+--------+-----------------------------------+----------+----------------
+ public | active_storage_attachments        | table    | hnnqlxetdxvbsy
+ public | active_storage_attachments_id_seq | sequence | hnnqlxetdxvbsy
+ public | active_storage_blobs              | table    | hnnqlxetdxvbsy
+ public | active_storage_blobs_id_seq       | sequence | hnnqlxetdxvbsy
+ public | ar_internal_metadata              | table    | hnnqlxetdxvbsy
+ public | comments                          | table    | hnnqlxetdxvbsy
+ public | comments_id_seq                   | sequence | hnnqlxetdxvbsy
+ public | friend_requests                   | table    | hnnqlxetdxvbsy
+ public | friend_requests_id_seq            | sequence | hnnqlxetdxvbsy
+ public | friendships                       | table    | hnnqlxetdxvbsy
+ public | friendships_id_seq                | sequence | hnnqlxetdxvbsy
+ public | likes                             | table    | hnnqlxetdxvbsy
+ public | likes_id_seq                      | sequence | hnnqlxetdxvbsy
+ public | notifications                     | table    | hnnqlxetdxvbsy
+ public | notifications_id_seq              | sequence | hnnqlxetdxvbsy
+ public | posts                             | table    | hnnqlxetdxvbsy
+ public | posts_id_seq                      | sequence | hnnqlxetdxvbsy
+ public | schema_migrations                 | table    | hnnqlxetdxvbsy
+ public | users                             | table    | hnnqlxetdxvbsy
+ public | users_id_seq                      | sequence | hnnqlxetdxvbsy
+(20 rows)
+

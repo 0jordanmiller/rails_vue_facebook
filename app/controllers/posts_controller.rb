@@ -12,6 +12,8 @@ class PostsController < ApplicationController
     elsif get_posts[:page_type] == 'profile'
       posts = User.find_by(id: get_posts[:user_id]).posts
     end
+    posts = posts.sort_by { |i| i.created_at }
+    posts.reverse!
     posts_likes = []
     likes = posts.map { |post| post.likes }
     comments = posts.map { |post| post.comments }
@@ -31,12 +33,12 @@ class PostsController < ApplicationController
 
   def create
     p 'is it live'
-    @post = Post.new(whitelisted)
-    @post.save
+    post = Post.new(whitelisted)
+    post.save
   end
 
   def destroy
-    Post.find_by(id: id[:id]).destroy
+    Post.find_by(id).destroy
   end
 
   private

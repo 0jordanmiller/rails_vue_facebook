@@ -10,6 +10,7 @@
     <b-modal
       v-model="isComponentModalActive"
       has-modal-card
+      @close-modal="closeModal"
       trap-focus
       :destroy-on-hide="false"
       aria-role="dialog"

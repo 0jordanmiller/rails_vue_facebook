@@ -1,9 +1,10 @@
 class UploadController < ApplicationController
   def upload_picture
+    user = User.find_by(id: picture[:user_id])
     if picture[:type] == 'profile'
-      User.first.profile_picture.attach(picture[:picture])
+      user.profile_picture.attach(picture[:picture])
     else
-      User.first.cover_picture.attach(picture[:picture])
+      user.cover_picture.attach(picture[:picture])
     end
   end
 

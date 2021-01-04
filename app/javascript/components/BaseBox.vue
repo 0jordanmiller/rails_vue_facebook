@@ -16,7 +16,7 @@
               <strong>
                 <!-- add conditional links and methods -->
                 <router-link v-if="isPost" :to="userProfile(data.user_id)">
-                  {{ data.name }}
+                  {{ filterName(data.user_id) }}
                 </router-link>
                 <router-link v-else :to="userProfile(data.id)">
                   {{ data.name }}
@@ -79,7 +79,7 @@ import sendNotificationMixin from "../mixins/sendNotificationMixin";
 
 export default {
   name: "Base-Box",
-  props: ["data", "likes", "comments", "addFriend", "isPost"],
+  props: ["data", "likes", "comments", "addFriend", "isPost", "names"],
   components: {
     "add-friend": addFriendButton,
     "write-comment": writeCommentField,
@@ -99,6 +99,9 @@ export default {
     },
   },
   methods: {
+    filterName(id) {
+      return this.names[id];
+    },
     likedOrNot(arr) {
       let found = false;
       for (let i = 0; i < arr.length; i++) {

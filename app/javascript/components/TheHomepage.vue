@@ -1,22 +1,21 @@
 <template lang="">
 <div>
-  <div v-if="!signedIn">
-    <div class="columns">
+    <div class="columns default" v-if="!signedIn">
       <div class="column is-6">
-        <h1>facebook lols</h1>
+        <h1>facebook</h1>
       </div>
-      <div class="column is-6">
+      <div class="column is-6 login-pane">
         <sign-in />
-        <signup-modal buttonText="Create New Account" >
+        <hr style="background: #d7d7d7; height: 1px;"/>
+        <signup-modal style="border-radius:15px;" class="create-account" buttonText="Create New Account" >
           <div slot='content'>
             <signup-content v-on:close="closeModal"/>
           </div>
         </signup-modal>
       </div>
     </div>
-  </div>
 
-    <div v-if="signedIn">
+    <div v-else>
         <show-posts pageType='home' />
     </div>
 </div>
@@ -52,7 +51,23 @@ export default {
 </script>
 
 <style>
+.login-pane {
+  background: #e8e8e8;
+  padding: 40px;
+}
+.default {
+  padding-top: 15%;
+}
 h1 {
   font-size: 40px;
+}
+
+.create-account {
+  margin-top: 35px;
+  text-align: center;
+}
+.create-account button {
+  width: 100%;
+  font-size: 30px;
 }
 </style>

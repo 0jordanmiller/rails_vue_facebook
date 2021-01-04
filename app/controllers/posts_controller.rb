@@ -1,33 +1,50 @@
 class PostsController < ApplicationController
   def index
+    current_user = User.includes(:friends).find_by(id: get_posts[:user_id])
     if get_posts[:page_type] == 'home'
-      posts = User.find_by(id: get_posts[:user_id]).friends.map do |user|
-        user.posts
-      end
+      friend_id = current_user.friends.map(&:id)
+      posts = User.includes(:posts).find(friend_id)
+      posts = posts.map { |user| user.posts }
       posts = if posts.any?
-                posts.sum + User.find_by(id: get_posts[:user_id]).posts
+                posts.sum + current_user.posts
               else
-                User.find_by(id: get_posts[:user_id]).posts
+                current_user.posts
               end
-    elsif get_posts[:page_type] == 'profile'
-      posts = User.find_by(id: get_posts[:user_id]).posts
+    else
+      posts = current_user.posts
     end
-    posts = posts.sort_by { |i| i.created_at }
+    posts = posts.sort_by(&:created_at)
     posts.reverse!
-    posts_likes = []
-    likes = posts.map { |post| post.likes }
-    comments = posts.map { |post| post.comments }
-    posts_likes.push(posts, likes, comments)
+    profile_pictures = { current_user.id => current_user.profile_picture }
+    names = { current_user.id => current_user.name }
 
-    render json: posts_likes.to_json
+    current_user.friends.each do |user|
+      names[user.id] = user.name
+      # profile_pictures[user.id] = user.profile_picture
+    end
+    ids = posts.map(&:id)
+    posts = Post.includes(:comments, :likes).find(ids)
+
+    likes = posts.map(&:likes)
+    comments = posts.map(&:comments)
+
+    post_hash = {
+      posts: posts,
+      comments: comments,
+      likes: likes,
+      names: names,
+      profile_pictures: profile_pictures
+    }
+    render json: post_hash.to_json
   end
 
-  def show
-    Post.find_by
-  end
+  # def show
+  #   Post.find_by
+  # end
 
   def updated
-    updated_comments = Post.find_by(id: id[:id]).comments
+    p 'this has been updateed'
+    updated_comments = Post.find_by(id).comments
     render json: updated_comments.to_json
   end
 

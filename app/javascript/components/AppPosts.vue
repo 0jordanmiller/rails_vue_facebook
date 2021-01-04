@@ -9,7 +9,9 @@
       :data="posts"
       :likes="likes"
       :comments="comments"
+      :names="names"
       :isPost="true"
+      style="clear: both; padding-top: 10px"
     />
   </div>
 </template>
@@ -31,6 +33,7 @@ export default {
       posts: [],
       likes: [],
       comments: [],
+      names: "",
     };
   },
   created: function () {
@@ -43,7 +46,6 @@ export default {
   },
   methods: {
     showPosts: function () {
-      console.log("posts updated");
       axios
         .get("/posts", {
           params: {
@@ -52,9 +54,11 @@ export default {
           },
         })
         .then((response) => {
-          this.posts = response.data[0];
-          this.likes = response.data[1];
-          this.comments = response.data[2];
+          console.log(response);
+          this.posts = response.data.posts;
+          this.likes = response.data.likes;
+          this.comments = response.data.comments;
+          this.names = response.data.names;
         })
         .catch((error) => {
           console.log(error);

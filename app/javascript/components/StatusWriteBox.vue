@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="status">
     <b-field label="What's on your mind?">
       <b-input v-model="writeStatus" type="textarea"></b-input>
     </b-field>
-    <b-button type="is-primary" v-on:click="submitPost">Submit</b-button>
+    <b-button class="submit" type="is-primary" v-on:click="submitPost"
+      >Submit</b-button
+    >
   </div>
 </template>
 
@@ -39,3 +41,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.submit {
+  float: right;
+}
+.status {
+  max-width: 900px;
+  margin: auto;
+}
+</style>

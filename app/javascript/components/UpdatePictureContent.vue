@@ -2,6 +2,7 @@
   <div class="modal-card" style="width: auto">
     <header class="modal-card-head">
       <p class="modal-card-title">{{ title }}</p>
+      <button type="button" class="delete" @click="$emit('close-modal')" />
     </header>
 
     <section class="modal-card-body">
@@ -44,9 +45,7 @@ export default {
       );
 
       // Finally, sending the POST request with our beloved Axios
-      axios.post("/upload", formData).then((response) => {
-        console.log("a", response);
-      });
+      axios.post("/upload", formData).then((response) => {});
     },
   },
   data: function () {

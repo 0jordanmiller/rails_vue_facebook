@@ -1,17 +1,29 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @user = User.where.not(id: user_id[:user_id])
     render json: @user.to_json
   end
 
   def show
-    @user = User.find_by(id: user_id[:user_id])
-    p @user
+    user = User.find_by(id)
+    hash = {
+      user: user
+    }
+    hash[:profile_picture] = url_for(user.profile_picture)
+    hash[:cover_picture] = url_for(user.cover_picture)
+
+    render json: hash.to_json
   end
 
   private
 
   def user_id
     params.permit(:user_id)
+  end
+
+  def id
+    params.permit(:id)
   end
 end

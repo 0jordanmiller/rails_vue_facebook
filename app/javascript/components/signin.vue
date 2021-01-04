@@ -2,19 +2,26 @@
   <div>
     <section class="columns">
       <div class="column">
-        <b-field label="Email">
-          <b-input v-model.trim="email" type="email" maxlength="30"></b-input>
+        <b-field>
+          <b-input
+            placeholder="Email"
+            v-model.trim="email"
+            type="email"
+            maxlength="30"
+          ></b-input>
         </b-field>
 
-        <b-field label="Password">
+        <b-field>
           <b-input
             v-model.trim="password"
+            placeholder="Password"
             type="password"
             maxlength="30"
           ></b-input>
         </b-field>
 
-        <b-button v-on:click="signIn()">Submit</b-button>
+        <b-button class="log-in" v-on:click="signIn()">Log In</b-button>
+
         <p>{{ handleError }}</p>
       </div>
     </section>
@@ -82,3 +89,17 @@ export default {
 };
 </script>
 
+<style>
+.log-in {
+  width: 100%;
+  font-size: 1.5em;
+  border-radius: 10px;
+  background: #1877f2;
+  color: #fff;
+}
+
+.log-in:hover {
+  background: #166fe5;
+  color: #fff;
+}
+</style>

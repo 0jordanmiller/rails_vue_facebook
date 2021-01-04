@@ -156,10 +156,17 @@ p.notification-text {
   text-align: left;
 }
 
+.notification::-webkit-scrollbar {
+  display: none;
+}
+
 .notification {
   position: absolute;
   right: 1%;
   width: 300px;
+  min-height: 470px;
+  max-height: -webkit-fill-available;
+  overflow: scroll;
 }
 
 p {

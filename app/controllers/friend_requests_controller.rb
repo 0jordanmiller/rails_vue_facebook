@@ -10,8 +10,8 @@ class FriendRequestsController < ApplicationController
   end
 
   def create
-    if User.find_by(id: send_request[:sender]).sent_to.select { |user| user[:id] == send_request[:receiver] }.empty?
-      User.find_by(id: send_request[:sender]).sent_to << User.find_by(id: send_request[:receiver])
+    if User.find(send_request[:sender]).sent_to.select { |user| user[:id] == send_request[:receiver] }.empty?
+      User.find(send_request[:sender]).sent_to << User.find(send_request[:receiver])
     end
   end
 

@@ -20,11 +20,11 @@ class PostsController < ApplicationController
 
     current_user.friends.each do |user|
       names[user.id] = user.name
-      # profile_pictures[user.id] = user.profile_picture
+      # profile_pictures[user.id] = user.profile_picture$
     end
+    
     ids = posts.map(&:id)
     posts = Post.includes(:comments, :likes).find(ids)
-
     likes = posts.map(&:likes)
     comments = posts.map(&:comments)
 

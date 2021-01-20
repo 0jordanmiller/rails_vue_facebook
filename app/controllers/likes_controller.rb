@@ -1,10 +1,10 @@
 class LikesController < ApplicationController
   def create
-    Post.find_by(id: like_create[:post_id]).likers << User.find_by(id: like_create[:user_id])
+    Post.find(like_create[:post_id]).likers << User.find(like_create[:user_id])
   end
 
   def destroy
-    p Post.find_by(id: like[:post_id]).likes.find_by(user_id: like[:user_id]).destroy
+    p Post.find(like[:post_id]).likes.find_by(user_id: like[:user_id]).destroy
   end
 
   private

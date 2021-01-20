@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_one_attached :profile_picture
   has_one_attached :cover_picture
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
 
   has_many :notifications
 
@@ -30,5 +30,5 @@ class User < ApplicationRecord
     # TODO: put in check that association does not exist
     friends << user
     user.friends << self
-  end
+  end 
 end

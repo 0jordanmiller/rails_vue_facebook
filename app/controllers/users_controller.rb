@@ -1,19 +1,26 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
 
   def index
-    @user = User.where.not(id: user_id[:user_id])
+    @user = User.where.not(current_user)
     render json: @user.to_json
   end
 
   def show
     user = User.find_by(id)
-    hash = {
-      user: user
-    }
-    hash[:profile_picture] = url_for(user.profile_picture)
-    hash[:cover_picture] = url_for(user.cover_picture)
+    hash = {}
+    p 'tset'
+    p user.profile_picture.attached?
+    p current_user
+    unless current_user.profile_picture.attached?
+      hash[:profile_picture] = 'default.png'
+      hash[:cover_picture] = 'default-cover.png'
+    else
+      hash[:profile_picture] = url_for(user.profile_picture)
+      hash[:cover_picture] = url_for(user.cover_picture)
+    end
 
+    p 'tsettt'
+    p hash
     render json: hash.to_json
   end
 

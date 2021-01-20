@@ -1,11 +1,11 @@
 class FriendsController < ApplicationController
   def index
-    @friends = User.find_by(id: user_id[:user_id]).friends
+    @friends = User.find(user_id[:user_id]).friends
     render json: @friends.to_json
   end
 
   def create
-    User.find_by(id: requester[:user1]).befriend(User.find_by(id: requester[:user2]))
+    User.find(requester[:user1]).befriend(User.find(requester[:user2]))
   end
 
   private

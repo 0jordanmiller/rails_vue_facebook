@@ -4,6 +4,7 @@
         <div class="cover-wrap">
           <div class="pictures">
             <img id="cover-picture" :src="this.cover_picture" alt="cover">
+
             <img id="profile-picture" :src="this.profile_picture" alt="profile">
             <div v-if="userProfile" >
               <update-picture id="edit-profile" buttonText="Edit Profile Picture">
@@ -18,11 +19,9 @@
             </update-picture>
           </div>
           </div>
-          {{this.$store.state.count}}
-          <button @click="increment">test</button>
         </div>
         
-        <h1 id="name"> {{ name }} </h1>
+        <h1 id="name"> {{ $store.state.user.name }} </h1>
       </div>
         <b-button v-if="!userProfile" @click="" type="is-info">Add Friend</b-button>
         <show-posts pageType="profile" />
@@ -53,13 +52,9 @@ export default {
     };
   },
   methods: {
-    increment() {
-      this.$store.commit("increment");
-    },
     fetchUserData() {
       axios.get(`/users/${this.$route.params.id}`).then((res) => {
         console.log(res);
-        this.name = res.data.user.name;
         this.profile_picture = res.data.profile_picture;
         this.cover_picture = res.data.cover_picture;
       });

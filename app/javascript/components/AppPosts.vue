@@ -22,7 +22,7 @@ import BaseBox from "./BaseBox";
 import WriteStatusBox from "./StatusWriteBox";
 
 export default {
-  name: "show-posts",
+  name: "App-Posts",
   props: ["pageType"],
   components: {
     "f-post": BaseBox,

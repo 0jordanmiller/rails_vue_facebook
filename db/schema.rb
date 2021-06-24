@@ -47,11 +47,6 @@ ActiveRecord::Schema.define(version: 2020_11_17_031042) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "events", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "friend_requests", force: :cascade do |t|
     t.bigint "sender_id"
     t.bigint "receiver_id"
@@ -59,15 +54,6 @@ ActiveRecord::Schema.define(version: 2020_11_17_031042) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["receiver_id"], name: "index_friend_requests_on_receiver_id"
     t.index ["sender_id"], name: "index_friend_requests_on_sender_id"
-  end
-
-  create_table "friendship_requests", force: :cascade do |t|
-    t.bigint "friend_requests_sent_id", null: false
-    t.bigint "friend_requests_received_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["friend_requests_received_id"], name: "index_friendship_requests_on_friend_requests_received_id"
-    t.index ["friend_requests_sent_id"], name: "index_friendship_requests_on_friend_requests_sent_id"
   end
 
   create_table "friendships", force: :cascade do |t|
@@ -101,8 +87,6 @@ ActiveRecord::Schema.define(version: 2020_11_17_031042) do
 
   create_table "posts", force: :cascade do |t|
     t.text "post"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.string "name"
     t.index ["user_id"], name: "index_posts_on_user_id"
@@ -123,8 +107,6 @@ ActiveRecord::Schema.define(version: 2020_11_17_031042) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "friend_requests", "users", column: "receiver_id"
   add_foreign_key "friend_requests", "users", column: "sender_id"
-  add_foreign_key "friendship_requests", "users", column: "friend_requests_received_id"
-  add_foreign_key "friendship_requests", "users", column: "friend_requests_sent_id"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
   add_foreign_key "posts", "users"

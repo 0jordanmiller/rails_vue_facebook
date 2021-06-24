@@ -81,8 +81,8 @@ export default {
   },
   data: function () {
     return {
-      email: "0jordanmiller@gmail.com",
-      password: "Erlichten8",
+      email: "testing123@gmail.com",
+      password: "testing123",
       errors: null,
     };
   },

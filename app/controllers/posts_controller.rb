@@ -28,6 +28,9 @@ class PostsController < ApplicationController
     likes = posts.map(&:likes)
     comments = posts.map(&:comments)
 
+    p 'testing123'
+    p posts
+
     post_hash = {
       posts: posts,
       comments: comments,
@@ -35,6 +38,7 @@ class PostsController < ApplicationController
       names: names,
       profile_pictures: profile_pictures
     }
+    p post_hash
     render json: post_hash.to_json
   end
 

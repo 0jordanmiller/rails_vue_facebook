@@ -4,13 +4,12 @@
       @update-page="showPosts"
       v-if="showWriteStatus || pageType === 'home'"
     />
-    <f-post
+    <f-posts
       @update-page="showPosts"
       :data="posts"
       :likes="likes"
       :comments="comments"
       :names="names"
-      :isPost="true"
       style="clear: both; padding-top: 10px"
     />
   </div>
@@ -18,14 +17,14 @@
 
 <script>
 import axios from "../backend";
-import BaseBox from "./BaseBox";
+import StatusBox from "./StatusBox";
 import WriteStatusBox from "./StatusWriteBox";
 
 export default {
   name: "App-Posts",
   props: ["pageType"],
   components: {
-    "f-post": BaseBox,
+    "f-posts": StatusBox,
     "write-status": WriteStatusBox,
   },
   data: function () {

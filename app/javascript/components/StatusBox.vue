@@ -15,15 +15,15 @@
             <p>
               <strong>
                 <!-- add conditional links and methods -->
-                <router-link :to="userProfile(data.user_id)">
-                  {{ filterName(data.user_id) }}
+                <router-link :to="userProfile(data[0].post.user_id)">
+                  {{ data[0].post.name }}
                 </router-link>
 
               </strong>
               <br />
-              <small>{{ data.created_at }}</small>
+              <small>{{ data[0].post.created_at }}</small>
               <br />
-              {{ data.post }}
+              {{ data[0].post.post }}
             </p>
           </div>
 
@@ -41,10 +41,9 @@
                     />
                   </span>
                 </a>
-                {{ likeCount(likes[i]) }}
               </p>
 
-              <comment-box :index="i" :comments="comments" />
+              <comment-box :index="i" :comments="data[0].comments" />
             </div>
             <write-comment @send-comment="makeComment(data.id, $event)" />
           </div>
@@ -73,7 +72,7 @@ import sendNotificationMixin from "../mixins/sendNotificationMixin";
 
 export default {
   name: "Status-Box",
-  props: ["data", "likes", "comments", "addFriend", "names"],
+  props: ["data"],
   components: {
     "write-comment": writeCommentField,
     "comment-box": commentBox,
@@ -92,9 +91,6 @@ export default {
     },
   },
   methods: {
-    filterName(id) {
-      return this.names[id];
-    },
     likedOrNot(arr) {
       let found = false;
       for (let i = 0; i < arr.length; i++) {

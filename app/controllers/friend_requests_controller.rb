@@ -1,6 +1,6 @@
 class FriendRequestsController < ApplicationController
   def index
-    @friend_requests = User.find_by(user_id).received_from
+    @friend_requests = User.find(user_id[:user_id]).received_from
     render json: @friend_requests.to_json
   end
 

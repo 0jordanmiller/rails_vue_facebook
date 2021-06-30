@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
 
   def index
-    @user = User.where.not(current_user)
-    render json: @user.to_json
+    @user = User.where.not(id: current_user)
+    if @user
+      render json: @user.to_json
+    end
   end
 
   def show

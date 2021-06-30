@@ -6,10 +6,7 @@
     />
     <f-posts
       @update-page="showPosts"
-      :data="posts"
-      :likes="likes"
-      :comments="comments"
-      :names="names"
+      :data="data"
       style="clear: both; padding-top: 10px"
     />
   </div>
@@ -29,10 +26,7 @@ export default {
   },
   data: function () {
     return {
-      posts: [],
-      likes: [],
-      comments: [],
-      names: "",
+      data: []
     };
   },
   created: function () {
@@ -54,10 +48,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          this.posts = response.data.posts;
-          this.likes = response.data.likes;
-          this.comments = response.data.comments;
-          this.names = response.data.names;
+          this.data = response.data
         })
         .catch((error) => {
           console.log(error);

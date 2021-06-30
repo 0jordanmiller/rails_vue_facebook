@@ -2,7 +2,7 @@
   <div>
     <div
       class="comment box"
-      v-for="comment in comments[index]"
+      v-for="comment in comments"
       :key="comment.id"
     >
       <article class="media">

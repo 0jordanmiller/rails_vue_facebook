@@ -21,7 +21,11 @@
 
               </strong>
               <br />
-              <small>{{ data[0].post.created_at }}</small>
+              <small>
+                <router-link :to="userProfile(data[0].post.user_id)">
+                  {{ data[0].post.created_at }}
+                </router-link>
+              </small>
               <br />
               {{ data[0].post.post }}
             </p>
@@ -45,7 +49,7 @@
 
               <comment-box :index="i" :comments="data[0].comments" />
             </div>
-            <write-comment @send-comment="makeComment(data.id, $event)" />
+            <write-comment @send-comment="makeComment(data[0].id, $event)" />
           </div>
         </div>
         <nav v-if="signedIn === data.user_id" class="level is-mobile">
@@ -67,7 +71,6 @@ import writeCommentField from "./WriteCommentField";
 import commentBox from "./CommentBox";
 import dropdown from "./PostDropdown";
 import axios from "../backend";
-import Vue from "vue";
 import sendNotificationMixin from "../mixins/sendNotificationMixin";
 
 export default {
@@ -101,10 +104,10 @@ export default {
       this.likedPosts.push(found);
     },
     userProfile(id) {
-      return "/user/" + id;
+      return `/user/${id}`;
     },
-    likeCount(likes) {
-      return likes.length;
+    showPost(user_id, post_id) {
+      return `/user/${user_id}/post/${post_id}`
     },
     thumbsUp(index, post_id, user_id) {
       if (this.likedPosts[index]) {
@@ -141,6 +144,7 @@ export default {
           },
         })
         .then((response) => {
+          console.log(response);
           this.updatePage();
         })
         .catch((err) => {

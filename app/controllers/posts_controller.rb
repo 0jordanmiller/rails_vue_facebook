@@ -1,3 +1,15 @@
+module PostDataHelper
+  def post_data(users)
+    posts_data = []
+    users.each do |user|
+      user.posts.each do |post|
+        posts_data.push([{post: post, comments: post&.comments, likes: post&.likes}])
+      end
+    end
+    posts_data
+  end
+end
+
 class PostsController < ApplicationController
   def index
     account = User.includes(:friends).find(get_posts[:user_id])
@@ -8,14 +20,10 @@ class PostsController < ApplicationController
     else
       users = [account]
     end
-    posts_data = []
-    users.each do |user|
-      user.posts.each do |post|
-        posts_data.push([{post: post, comments: post&.comments, likes: post&.likes}])
-      end
-    end
+    posts_data = helpers.post_data(user)
 
     render json: posts_data.to_json
+
   end
 
   # def show

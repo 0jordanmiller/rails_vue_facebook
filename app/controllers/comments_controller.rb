@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   def create
+    p create_comment
+    p 'test'
     Post.find_by(id: create_comment[:post_id]).comments << Comment.create(create_comment)
   end
 

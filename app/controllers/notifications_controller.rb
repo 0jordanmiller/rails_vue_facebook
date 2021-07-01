@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
   def index
     p notif_index
-    notification = User.find_by(notif_index).notifications
+    notification = User.find_by(notif_index).notifications.first(5)
     render json: notification.to_json
   end
 

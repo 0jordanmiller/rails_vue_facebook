@@ -14,6 +14,7 @@ const routes = [
     { name: "root", path: "/", component: homepage},
     { name: "signup", path: '/signup', component: signup},
     { name: "posts", path: '/posts', component: posts },
+    { name: "post", path: '/user/:user_id/posts/:post_id', component: posts },
     { name: "signin", path: '/signin', component: signin },
     { name: "profile", path: '/user/:id', component: profile },
     { name: "friend-requests", path: '/friend_requests', component: friendrequests },

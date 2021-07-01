@@ -31,6 +31,7 @@ export default {
   },
   created: function () {
     this.showPosts();
+    console.log(this.$route.params.id);
   },
   watch: {
     $route(to, from) {

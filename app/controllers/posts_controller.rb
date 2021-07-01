@@ -11,6 +11,8 @@ module PostDataHelper
 end
 
 class PostsController < ApplicationController
+  include PostDataHelper
+
   def index
     account = User.includes(:friends).find(get_posts[:user_id])
     if get_posts[:page_type] == 'home'
@@ -20,15 +22,13 @@ class PostsController < ApplicationController
     else
       users = [account]
     end
-    posts_data = helpers.post_data(user)
-
+    posts_data = post_data(users)
     render json: posts_data.to_json
-
   end
 
-  # def show
-  #   Post.find_by
-  # end
+  def show
+    Post.find_by
+  end
 
   def updated
     p 'this has been updateed'

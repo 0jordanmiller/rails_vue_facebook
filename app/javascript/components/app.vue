@@ -17,12 +17,6 @@ export default {
   name: "app",
   computed: {},
   components: { navbar },
-  methods: {
-    increment() {
-      this.$store.commit("increment");
-      console.log(this.$store.state.counter);
-    },
-  },
   beforeCreate: function () {
     const existingSession = vueCookie.get("session");
 
